@@ -53,10 +53,43 @@ public class Admin extends Usuario {
 	                   "Menú admin", 0,0, null, opciones, opciones[0]);
 	          switch (opcion) {
 			case 0:		//mostrar clientes	
-				JOptionPane.showMessageDialog(null, this.listasClientes);
+					String[] gente = new String[listasClientes.size()];
+					for (int i = 0; i < gente.length; i++) {
+						gente[i] = listasClientes.get(i).getNombre_completo();
+					}
+					
+					int persona =JOptionPane.showOptionDialog(null,
+							"Elija el elemento que desee", null,
+							0,0 ,null, gente, gente[0]);
+					
+				JOptionPane.showMessageDialog(null, listasClientes.get(persona));
 				break;
 			case 1:		//eliminar clientes	
+				if (listasClientes.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "La lista no tiene clientes");
+				} else {
+					String[] elegible = new String[listasClientes.size()];
+					
+					// este es el arrays de menu
+					for (int i = 0; i < elegible.length; i++) {
+						elegible[i] = listasClientes.get(i).getNombre_completo();
+					}
+					int elec =JOptionPane.showOptionDialog(null,
+							"Elija el elemento que desee", null,
+							0,0 ,null, elegible, elegible[0]);
+					
+					int confirmar = JOptionPane.showConfirmDialog(null, "Seguro de eliminar a " + listasClientes.get(elec));
+					
 				
+					if (confirmar==JOptionPane.YES_OPTION) {
+						Cliente clienteSeleccionado = listasClientes.get(elec);
+						listasClientes.remove(clienteSeleccionado);
+						JOptionPane.showMessageDialog(null, "Se eliminó a :"+ clienteSeleccionado.getNombre_completo());
+					}else {
+						JOptionPane.showMessageDialog(null, "No se eliminó a :"+ listasClientes.get(elec).getNombre_completo());
+					}
+				}
+
 				break;
 			case 2:// ver movimientos generales
 				JOptionPane.showMessageDialog(null, this.listasMovimientos);
