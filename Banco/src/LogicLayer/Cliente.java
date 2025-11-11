@@ -300,7 +300,12 @@ public class Cliente extends Usuario {
 					
 					break;
 				case 1: // ver movimientos
-					JOptionPane.showMessageDialog(null, this.cuenta.getListamov());
+					if (this.cuenta.getListamov().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "No hay ningun movimiento");
+					}else {
+						JOptionPane.showMessageDialog(null, this.cuenta.getListamov());
+					}
+					
 					
 					break;
 				case 2: // ver saldo

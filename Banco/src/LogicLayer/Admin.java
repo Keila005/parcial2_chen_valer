@@ -52,6 +52,7 @@ public class Admin extends Usuario {
 	           opcion = JOptionPane.showOptionDialog(null, "Elija alguna opción",
 	                   "Menú admin", 0,0, null, opciones, opciones[0]);
 	          switch (opcion) {
+	          
 			case 0:		//mostrar clientes	
 					String[] gente = new String[listasClientes.size()];
 					for (int i = 0; i < gente.length; i++) {
@@ -59,7 +60,7 @@ public class Admin extends Usuario {
 					}
 					
 					int persona =JOptionPane.showOptionDialog(null,
-							"Elija el elemento que desee", null,
+							"Elija los datos del cliente que deseas ver", null,
 							0,0 ,null, gente, gente[0]);
 					
 				JOptionPane.showMessageDialog(null, listasClientes.get(persona));
@@ -75,7 +76,7 @@ public class Admin extends Usuario {
 						elegible[i] = listasClientes.get(i).getNombre_completo();
 					}
 					int elec =JOptionPane.showOptionDialog(null,
-							"Elija el elemento que desee", null,
+							"Elija el cliente que deseas eliminar", null,
 							0,0 ,null, elegible, elegible[0]);
 					
 					int confirmar = JOptionPane.showConfirmDialog(null, "Seguro de eliminar a " + listasClientes.get(elec));
@@ -92,7 +93,12 @@ public class Admin extends Usuario {
 
 				break;
 			case 2:// ver movimientos generales
-				JOptionPane.showMessageDialog(null, this.listasMovimientos);
+				if (this.listasMovimientos.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "No hay ningun movimiento");
+				}else {
+					JOptionPane.showMessageDialog(null, this.listasMovimientos);
+				}
+				
                break;
 			
 			default:
