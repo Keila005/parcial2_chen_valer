@@ -119,7 +119,7 @@ public class Cliente extends Usuario {
 			switch (opcion) {
 			case 0:// retirar dinero
 				
-				  Tipo_operacion retirar = Tipo_operacion.Retirar_dinero; // obtenemos el enum
+				  Tipo_operacion retirar = Tipo_operacion.Retirar; // obtenemos el enum
 				    String[] subopciones = retirar.getOpciones(); // obtenemos las opciones: En locales / agencias
 				    
 				    int opcionRetiro = JOptionPane.showOptionDialog(null, 
@@ -162,7 +162,7 @@ public class Cliente extends Usuario {
 				
 			case 1://ingresar dinero
 				
-				 Tipo_operacion ingresar = Tipo_operacion.Ingresar_dinero; // obtenemos el enum
+				 Tipo_operacion ingresar = Tipo_operacion.Ingresar; // obtenemos el enum
 				    String[] subopciones2 = ingresar.getOpciones(); // obtenemos las opciones
 				    
 				    int opcionIngresar = JOptionPane.showOptionDialog(null, 
@@ -212,7 +212,7 @@ public class Cliente extends Usuario {
 				break;  // fin del caso 1
 				
 			case 2://transferir dinero
-				 Tipo_operacion transferir = Tipo_operacion.Transferir_dinero; // obtenemos el enum
+				 Tipo_operacion transferir = Tipo_operacion.Transferir; // obtenemos el enum
 				    String[] subopciones3 = transferir.getOpciones(); // obtenemos las opciones
 				    
 				    int opcionTransferir = JOptionPane.showOptionDialog(null, 
@@ -259,7 +259,7 @@ public class Cliente extends Usuario {
 				String [] subopciones4= dolares.getOpciones();
 				
 				 int opcionDolares= JOptionPane.showOptionDialog(null, 
-					        "Seleccione qué deseas realizar:", 
+					        "Seleccione qué deseas realizar:\n1 ARS=1450 USD", 
 					        "Comprar/Verder dinero", 
 					        JOptionPane.DEFAULT_OPTION, 
 					        JOptionPane.INFORMATION_MESSAGE, 

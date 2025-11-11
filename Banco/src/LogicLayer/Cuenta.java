@@ -100,8 +100,8 @@ public class Cuenta {
 		if (this.saldoPesos>=monto) {
 			this.saldoPesos-=monto;
 			JOptionPane.showMessageDialog(null, "Saldo actual: "+this.saldoPesos);
-			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Transferir_dinero,monto));
-			Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Transferir_dinero,monto));
+			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Transferir,monto));
+			Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Transferir,monto));
 		}else {
 			JOptionPane.showMessageDialog(null, "No tenes el saldo suficiente para transferir");
 		}
@@ -111,8 +111,8 @@ public class Cuenta {
 		if (this.saldoPesos>=monto) {
 			this.saldoPesos-=monto;
 			JOptionPane.showMessageDialog(null, "Se retiro el dinero correctamente.\nSaldo actual: "+this.saldoPesos);
-			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Retirar_dinero,monto));
-			Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Retirar_dinero,monto));
+			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Retirar,monto));
+			Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Retirar,monto));
 		}else {
 			JOptionPane.showMessageDialog(null, "No tenes el saldo suficiente para retira dinero");
 		}
@@ -121,8 +121,8 @@ public class Cuenta {
 	public void ingresarDinero(double monto,String nombreCliente) {
 		this.saldoPesos+=monto;
 		   
-		this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar_dinero,monto));
-		Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Ingresar_dinero,monto));
+		this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar,monto));
+		Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Ingresar,monto));
 		
 			JOptionPane.showMessageDialog(null, "Se retiro el dinero correctamente.\nSaldo actual: "+this.saldoPesos);
 		
@@ -131,9 +131,10 @@ public class Cuenta {
 	public void comprarDolares(double monto,String nombreCliente) { //ingresar la plata en pesos que se quiere vender
 		if (this.saldoPesos>=monto) {
 			this.saldoPesos-=monto;
-			this.saldoDolar+=monto*0.0007;
+			double compro=monto*0.0007;
+			this.saldoDolar+=compro;
 
-			JOptionPane.showMessageDialog(null, "Se vendio correctamente $"+monto+" pesos\nSaldo actual de pesos: "+this.saldoPesos+"\nSaldo actual de dolar:"+this.saldoDolar);
+			JOptionPane.showMessageDialog(null, "Se compro correctamente $"+compro+" dolares\nSaldo actual de pesos: "+this.saldoPesos+"\nSaldo actual de dolar:"+this.saldoDolar);
 			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Dolares,monto));
 			Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Dolares,monto));
 		}else {
@@ -144,9 +145,10 @@ public class Cuenta {
 	public void venderDolares(double monto, String nombreCliente) { //ingresar la plata en dolares que se quiere vender
 		if (this.saldoDolar>=monto) {
 			this.saldoDolar-=monto;
-			this.saldoPesos+=monto*1450;
+			double vender=monto*1450;
+			this.saldoPesos+=vender;
 			
-			JOptionPane.showMessageDialog(null, "Se vendio correctamente $"+monto+" dolares\nSaldo actual de pesos: "+this.saldoPesos+"\nSaldo actual de dolar:"+this.saldoDolar);
+			JOptionPane.showMessageDialog(null, "Se vendio correctamente $"+monto+" dolares\nRecibiste en Pesos"+vender+"\nSaldo actual de pesos: "+this.saldoPesos+"\nSaldo actual de dolar:"+this.saldoDolar);
 			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Dolares,monto));
 			Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Dolares,monto));
 		}else {
