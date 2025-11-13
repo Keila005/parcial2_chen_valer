@@ -63,48 +63,73 @@ public abstract class Usuario {
 	
 	public static Usuario Login(String usuario, String contr) {
 		
-		for (Usuario user : listusuarios) {
-			if (user.getUsuario().equals(usuario) && user.getContrasenia().equals(contr)) {
-				return user;
-			}
-			if (!user.getUsuario().equals(usuario) && user.getContrasenia().equals(contr)) {
-				JOptionPane.showMessageDialog(null, "La contraseña o el nombre del usuario es incorrecto"); //el usuario es incorrecto
-				return null;
-			}else if (user.getUsuario().equals(usuario) && !user.getContrasenia().equals(contr)) { //la contraseña es incorrecto
-				JOptionPane.showMessageDialog(null, "La contraseña o el nombre del usuario es incorrecto");
-				return null;
-			}
-		}
-		JOptionPane.showMessageDialog(null, "El usuario no está registrado");
-		return null;
+		  for (Usuario user : listusuarios) {
+		        if (user.getUsuario().equals(usuario) && user.getContrasenia().equals(contr)) {
+		            return user; // entra al menu
+		        }
+		    }
+
+		    boolean usuarioExiste = false;
+		    for (Usuario user : listusuarios) {
+		        if (user.getUsuario().equals(usuario)) { // si se ingresa el mismo nombre de usuario, 
+		        	//pero la contra esta mal
+		            usuarioExiste = true;
+		            break;
+		        }
+		    }
+
+		    if (usuarioExiste) {
+		        JOptionPane.showMessageDialog(null, "La contraseña es incorrecta");
+		    } else {
+		        JOptionPane.showMessageDialog(null, "El usuario no está registrado");
+		    }
+		    return null;
+	
 		
 	}  //fin de login
 	
 	public static void Registrar(){
 		
 		String nuevoUser=Validaciones.IngresarString("Ingrese el nombre del usurio que deseas crear");
+		
 		for (Usuario user : listusuarios) {
 			if (user.getUsuario().equalsIgnoreCase(nuevoUser)) {
 	JOptionPane.showMessageDialog(null, "El usuario ya esta registrado, debes ir al Login");
 	return; //salir del metodo if
 				
-			}// fin del if, si ya existe
+			}// fin del if, si ya existe		
+			}// fin del for
+		 String nuevaContra = Validaciones.IngresarString("Ingrese una contraseña:");
+		 String nombre=Validaciones.IngresarString("Ingrese su nombre");
+		 String direccion=Validaciones.IngresarString("Ingrese su direccion");
+		 int doc=Validaciones.IngresarInt("Ingrese su dni");
+		 int tel=Validaciones.IngresarInt("Ingrese su numero de telefono");
+		 String mail=Validaciones.IngresarMail("Ingrese su gmail");
 		
-				 String nuevaContra = Validaciones.IngresarString("Ingrese una contraseña:");
-				 String nombre=Validaciones.IngresarString("Ingrese su nombre");
-				 String direccion=Validaciones.IngresarString("Ingrese su direccion");
-				 int doc=Validaciones.IngresarInt("Ingrese su dni");
-				 int tel=Validaciones.IngresarInt("Ingrese su numero de telefono");
-				 String mail=Validaciones.IngresarMail("Ingrese su gmail");
-				
-				 Usuario.getListusuarios().add(new Cliente(nuevoUser, nuevaContra, false, nombre, direccion, doc,tel,mail,new Cuenta()));
-				
-				    JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.\nYa puede iniciar sesión.");
-				    Admin.getListasClientes().add(new Cliente(nuevoUser,nuevaContra,false,nombre,direccion,doc,tel,mail));
-				    
-				    return;// luego de registar y que se guarde el dato(en la lista de usuarios), debe ir al login 
-	
-		
-			}
+		 String alias;
+		    boolean aliasExiste;
+		    do {
+		        alias = Validaciones.IngresarString("Ingrese el alias que desea crear (ej: nombre.mp)");
+		        aliasExiste = false;
+		        for (Cliente client : Admin.getListasClientes()) {
+		            if (client.getCuenta() != null && client.getCuenta().getAlias().equalsIgnoreCase(alias)) {
+		                aliasExiste = true;
+		                JOptionPane.showMessageDialog(null, "El alias ya existe, ingrese otro.");
+		                break;
+		            }
+		        }
+		    } while (aliasExiste);
+		    	
+		    Cuenta nuevaCuenta = new Cuenta( 0, 0, alias, new Banco("Banco Virtual Keith"));
+		    Cliente nuevoCliente = new Cliente(nuevoUser, nuevaContra, false, nombre, direccion, doc, tel, mail, nuevaCuenta);
+		    Usuario.getListusuarios().add(nuevoCliente); //guardar en la lista de usuarios
+		    Admin.getListasClientes().add(nuevoCliente); //guardar en la lista de clientes
+		    
+		    JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.\nYa puede iniciar sesión.");
+		  
+		    
+		    return;// luego de registar y que se guarde el dato(en la lista de usuarios), debe ir al login 
+
+
 	}// fin de registrar
 }

@@ -9,7 +9,7 @@ public enum Tipo_operacion {
 	Transferir(new String[]{"Alias/Cbu_cvu","Contacto"}),
 	Dolares(new String[]{"Comprar","Vender"}),
 	//agregar INVERTIR DINERO(new String[]{"Invertir","Ver interes"})
-	Otras_Funciones(new String[] {"Agregar contactos","Ver Movimientos","Ver Saldo"}),
+	Otras_Funciones(new String[] {"Agregar contactos","Ver Movimientos"}),
 	Salir(new String[] {"Cerrar seccion"});
 	
 	private String[] opciones;

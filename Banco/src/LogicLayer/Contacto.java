@@ -6,6 +6,7 @@ public class Contacto {
 		private String nombre; 
 	    private String alias; 
 	    private int cbu;
+	    private Cuenta cuenta;
 	   
 	    public Contacto(String nombre, String alias, int cbu) {
 	        this.nombre = nombre;
@@ -41,6 +42,16 @@ public class Contacto {
 
 		public void setCbu(int cbu) {
 			this.cbu = cbu;
+		}
+
+
+		public Cuenta getCuenta() {
+			return cuenta;
+		}
+
+
+		public void setCuenta(Cuenta cuenta) {
+			this.cuenta = cuenta;
 		}
 
 

@@ -16,7 +16,7 @@ import LogicLayer.Validaciones;
 public class Main {
 public static void main(String[] args) {
 	
-	Banco mercadoPago=new Banco("Mercado Pago");
+	Banco mercadoPago=new Banco("Banco virtual Keith");
 //     Cliente cliente = new Cliente("pepe", "0000", false, "Pepe", "Av.Belgrano 1121", 12345678, 987654321, "pepe@gmail.com");
 //     
      Usuario.getListusuarios().add(new Cliente("pepe", "0000", false, "Pepe", "Av.Belgrano 1121", 12345678, 98764321, "pepe@gmail.com",new Cuenta(00000001,1000,500,"pepe.mp",mercadoPago)));

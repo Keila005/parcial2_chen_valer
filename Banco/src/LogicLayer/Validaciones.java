@@ -65,6 +65,7 @@ public abstract class Validaciones {
 		return Double.parseDouble(dato) ;
 	}// fin del metodo double
 	
+	//VALIDAR MAIL
 	public static String IngresarMail(String mensaje) {
 		String dato;
 		boolean flag;
@@ -80,7 +81,7 @@ public abstract class Validaciones {
 			}
 		} while (flag==false);
 		return dato;
-	}
+	} //fin de validar mail
 	
 
 }

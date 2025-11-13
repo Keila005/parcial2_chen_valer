@@ -16,7 +16,7 @@ public class Cuenta {
 	private LinkedList<Movimiento> listamov = new LinkedList<Movimiento>();
 	private LinkedList<Contacto> contactos = new LinkedList<Contacto>();
 	
-	public Cuenta(int cbu_cvu, double saldoPesos, double saldoDolar, String alias,Banco banco) {
+	public Cuenta( double saldoPesos, double saldoDolar, String alias,Banco banco) {
 		super();
 		num++;
 		this.cbu_cvu = num;
@@ -26,8 +26,18 @@ public class Cuenta {
 		this.banco = banco;
 		this.listamov = new LinkedList<Movimiento>();
 		this.contactos = new LinkedList<Contacto>();
-		
-		
+	
+	}
+
+	public Cuenta(int cbu_cvu, double saldoPesos, double saldoDolar, String alias, Banco banco) {
+		super();
+		this.cbu_cvu = cbu_cvu;
+		this.saldoPesos = saldoPesos;
+		this.saldoDolar = saldoDolar;
+		this.alias = alias;
+		this.banco = banco;
+		this.listamov = new LinkedList<Movimiento>();
+		this.contactos = new LinkedList<Contacto>();
 	}
 
 	public Cuenta() {
@@ -96,21 +106,29 @@ public class Cuenta {
 		return "Cuenta:\nCbu_cvu=" + cbu_cvu +"\nSaldoPesos=" + saldoPesos + "\\nSaldoDolar=" + saldoDolar + "\nAlias="+ alias + "\nBanco=" + banco + "\nListamov="+ listamov + "----------\n";
 	}
 		
-	public void transferirDinero(double monto,String nombreCliente) {
+	public void transferirDinero(double monto,String nombreCliente, Cuenta destino) {
 		if (this.saldoPesos>=monto) {
 			this.saldoPesos-=monto;
+			
+			destino.setSaldoPesos(destino.getSaldoPesos()+monto);
+			//movimiento para el que transfiere
 			JOptionPane.showMessageDialog(null, "Saldo actual: "+this.saldoPesos);
-			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Transferir,monto));
-			Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Transferir,monto));
+			this.listamov.add(new Movimiento(nombreCliente+" transfirió a "+destino.getAlias(), Tipo_operacion.Transferir,monto));
+			
+			Admin.getListasMovimientos().add(new Movimiento(nombreCliente+" transfirio a "+destino.getAlias(), Tipo_operacion.Transferir,monto));
+			//mov para el que recibe
+			
+		destino.listamov.add(new Movimiento("Usted con alias: "+destino.getAlias()+" recibió de "+nombreCliente,Tipo_operacion.Ingresar,monto));
+		 Admin.getListasMovimientos().add(new Movimiento("El alias: "+destino.getAlias()+" recibió de "+nombreCliente,Tipo_operacion.Ingresar,monto));
 		}else {
 			JOptionPane.showMessageDialog(null, "No tenes el saldo suficiente para transferir");
 		}
 	}// fin de transferir
 	
-	public void retirarDinero(double monto,String nombreCliente) {
+	public void retirarDinero(double monto,String nombreCliente,String lugarSeleccionado) {
 		if (this.saldoPesos>=monto) {
 			this.saldoPesos-=monto;
-			JOptionPane.showMessageDialog(null, "Se retiro el dinero correctamente.\nSaldo actual: "+this.saldoPesos);
+			JOptionPane.showMessageDialog(null, "Se retiro el dinero correctamente en:"+lugarSeleccionado+".\nSaldo actual: "+this.saldoPesos);
 			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Retirar,monto));
 			Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Retirar,monto));
 		}else {
@@ -118,23 +136,47 @@ public class Cuenta {
 		}
 	} // fin de retirar
 	
-	public void ingresarDinero(double monto,String nombreCliente) {
+	public void ingresarDinero(double monto,String nombreCliente,String lugarSeleccionado) {
 		this.saldoPesos+=monto;
 		   
 		this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar,monto));
 		Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Ingresar,monto));
 		
-			JOptionPane.showMessageDialog(null, "Se retiro el dinero correctamente.\nSaldo actual: "+this.saldoPesos);
+			JOptionPane.showMessageDialog(null, "Se retiro el dinero correctamente por: "+lugarSeleccionado+".\nSaldo actual: "+this.saldoPesos);
 		
 	} // fin de ingresar
 	
+	public void enviarDinero(double monto,String nombreCliente,Cuenta destino) {
+		if (destino.getSaldoPesos()>=monto) {
+			double suPlata=destino.getSaldoPesos();
+		double plataMenos=suPlata-monto;
+		this.saldoPesos+=monto;
+		
+		// el que recibio dinero
+		this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar,monto));
+		Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Ingresar,monto));
+		
+		// el que envia el dinero( le transfirio)
+		destino.listamov.add(new Movimiento("Usted con alias: "+destino.getAlias()+" ingreso plata a  "+nombreCliente,Tipo_operacion.Ingresar,monto));
+		 Admin.getListasMovimientos().add(new Movimiento("El alias: "+destino.getAlias()+" ingreso plata a "+nombreCliente,Tipo_operacion.Ingresar,monto));
+		
+			JOptionPane.showMessageDialog(null, "Se retiro el dinero correctamente por: "+destino.getAlias()+".\nSaldo actual: "+this.saldoPesos);
+		}else {
+			JOptionPane.showMessageDialog(null, "El alias ingresado no tiene el saldo suficiente para transferirte");
+		}
+		
+	}
+	
+	
 	public void comprarDolares(double monto,String nombreCliente) { //ingresar la plata en pesos que se quiere vender
+		  double valorDolarCompra = 1450; 
 		if (this.saldoPesos>=monto) {
 			this.saldoPesos-=monto;
-			double compro=monto*0.0007;
+			double compro=monto/valorDolarCompra;
 			this.saldoDolar+=compro;
 
-			JOptionPane.showMessageDialog(null, "Se compro correctamente $"+compro+" dolares\nSaldo actual de pesos: "+this.saldoPesos+"\nSaldo actual de dolar:"+this.saldoDolar);
+			JOptionPane.showMessageDialog(null, "Se compro correctamente "+compro+" dolares\nSaldo actual en pesos: "+this.saldoPesos+"\nSaldo actual en dolares:"+this.saldoDolar);
+			
 			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Dolares,monto));
 			Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Dolares,monto));
 		}else {
@@ -143,12 +185,13 @@ public class Cuenta {
 	} // fin de comprar dolares
 	
 	public void venderDolares(double monto, String nombreCliente) { //ingresar la plata en dolares que se quiere vender
+		  double valorDolarVender = 1400; 
 		if (this.saldoDolar>=monto) {
 			this.saldoDolar-=monto;
-			double vender=monto*1450;
+			double vender=monto*valorDolarVender;
 			this.saldoPesos+=vender;
 			
-			JOptionPane.showMessageDialog(null, "Se vendio correctamente $"+monto+" dolares\nRecibiste en Pesos"+vender+"\nSaldo actual de pesos: "+this.saldoPesos+"\nSaldo actual de dolar:"+this.saldoDolar);
+			JOptionPane.showMessageDialog(null, "Se vendio correctamente "+monto+" dolares\nRecibiste en Pesos"+vender+"\nSaldo actual en pesos: "+this.saldoPesos+"\nSaldo actual en dolar:"+this.saldoDolar);
 			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Dolares,monto));
 			Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Dolares,monto));
 		}else {

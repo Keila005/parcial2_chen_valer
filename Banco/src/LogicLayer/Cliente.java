@@ -113,7 +113,7 @@ public class Cliente extends Usuario {
 		int opcion;
 		do {
 	
-			opcion= JOptionPane.showOptionDialog(null, "Elija alguna operacion",
+			opcion= JOptionPane.showOptionDialog(null, "Elija alguna operacion\n"+"Saldo actual en Pesos: "+this.cuenta.getSaldoPesos()+"\nSaldo actual en Dólares: "+this.cuenta.getSaldoDolar(),
 	                   "Menú cliente", 0,0, null, nombres, nombres[0]);
 			double monto;
 			switch (opcion) {
@@ -154,11 +154,10 @@ public class Cliente extends Usuario {
 						    // Se realiza la accion:
 						    if (!lugarSeleccionado.isEmpty()) {
 						         monto = Validaciones.IngresarDouble("Ingrese la cantidad de dinero que deseas retirar en " + lugarSeleccionado);
-						        this.getCuenta().retirarDinero(monto, this.nombre_completo);
-						        JOptionPane.showMessageDialog(null, "Ingreso realizado en: " + lugarSeleccionado);
+						        this.getCuenta().retirarDinero(monto, this.nombre_completo,lugarSeleccionado);
 						    } 
 				
-				break; // fin del caso 0
+				break; // fin del caso 0 RETIRAR DINERO
 				
 			case 1://ingresar dinero
 				
@@ -180,32 +179,34 @@ public class Cliente extends Usuario {
 	
 								if (seleccion != null) { 
 							monto = Validaciones.IngresarDouble("Ingrese la cantidad de dinero que deseas ingresar desde " + seleccion);
-								        this.getCuenta().ingresarDinero(monto, this.getNombre_completo());
-								        JOptionPane.showMessageDialog(null, "Ingreso realizado en: " + seleccion);
+								        this.getCuenta().ingresarDinero(monto, this.getNombre_completo(),seleccion);
 								}
 							 
-								break;// fin de caso 0
+								break;// fin de caso caso0/caso 0
 								
 							case 1: // transferencia
-								if (this.cuenta.getContactos().isEmpty()) {
-									JOptionPane.showMessageDialog(null, "No hay ningun contacto disponible");
-								}else {
-									String[] persona = new String[this.cuenta.getContactos().size()];
-									
-								for (int i = 0; i < persona.length; i++) {
-									persona[i] = this.cuenta.getContactos().get(i).getNombre();
-								}
+								String alias=Validaciones.IngresarString("Ingrese el alias o cbu/cvu");
+								Cliente destinos=null;
 								
-								String eleccion=(String)JOptionPane.showInputDialog(null,"Seleccione a quien deseas transferir","Transferencia",0,null,persona,persona[0]);
+								for (Cliente client : Admin.getListasClientes()) {
+								if (client.getCuenta()!= null && client.getCuenta().getAlias().equalsIgnoreCase(alias)) {
+								            destinos = client;
+								            break;
+								        }
+								}// fin del FOR
 								
-								if (eleccion != null) { 
-			 monto = Validaciones.IngresarDouble("Ingrese la cantidad de dinero que necesitas pedir a "+ eleccion);
-						  this.getCuenta().ingresarDinero(monto, this.nombre_completo);
-						JOptionPane.showMessageDialog(null, eleccion+" te transfirio $"+ monto);
+								  if (destinos == null) {
+					       JOptionPane.showMessageDialog(null, "No existe ningún usuario con ese alias.");
+					     
+								        break; // salir del caso
+								    }else {
+								    	monto = Validaciones.IngresarDouble("Ingrese la cantidad de dinero que deseas transferir al \nAlias: "+alias +"\nNombre:"+ destinos.getNombre_completo());
+								    	
+								this.cuenta.enviarDinero(monto, this.nombre_completo,destinos.getCuenta());
+								
 									}
-								} 
 								
-								break; // fin de caso 1
+								break;// fin del caso 0/caso1
 										
 					}// fin de elegir
 						    
@@ -225,8 +226,23 @@ public class Cliente extends Usuario {
 				    switch (opcionTransferir) {
 					case 0: // por alias o cbu
 						String alias=Validaciones.IngresarString("Ingrese el alias o cbu/cvu");
-						monto = Validaciones.IngresarDouble("Ingrese la cantidad de dinero que deseas transferir al "+alias);
-						this.cuenta.transferirDinero(monto, this.nombre_completo);
+						Cliente destinos=null;
+						
+						for (Cliente client : Admin.getListasClientes()) {
+						if (client.getCuenta()!= null && client.getCuenta().getAlias().equalsIgnoreCase(alias)) {
+						            destinos = client;
+						            break;
+						        }
+						}// fin del FOR
+						
+						  if (destinos == null) {
+						        JOptionPane.showMessageDialog(null, "No existe ningún usuario con ese alias.");
+						        break; // salir del caso
+						    }else {
+						    	monto = Validaciones.IngresarDouble("Ingrese la cantidad de dinero que deseas transferir al \nAlias: "+alias +"\nNombre:"+ destinos.getNombre_completo());
+								this.cuenta.transferirDinero(monto, this.nombre_completo,destinos.getCuenta());	
+							}
+						
 						break;
 						
 					case 1: //por contactos
@@ -241,13 +257,23 @@ public class Cliente extends Usuario {
 						}
 						
 						String destino=(String)JOptionPane.showInputDialog(null,"Seleccione a quien deseas transferir","Transferencia",0,null,persona,persona[0]);
-						
+	
 						if (destino != null) { 
-							monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero que necesitas transferir a "+ destino);
-							this.getCuenta().transferirDinero(monto,this.nombre_completo);
-				
-				JOptionPane.showMessageDialog(null, "Transferiste a "+destino+" $"+ monto+" exitosamente");
+							
+							 Cuenta enviado=null;
+							 for (Contacto contac : this.cuenta.getContactos()) {
+								 if (contac.getNombre().equals(destino)) {
+									enviado=contac.getCuenta();
+								}
 							}
+							 if (enviado!=null) { // si se recibio una cuenta destino
+						 monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero que necesitas transferir a "+ destino);
+									this.getCuenta().transferirDinero(monto,this.nombre_completo,enviado);
+						
+						JOptionPane.showMessageDialog(null, "Transferiste exitosamente a "+destino+" $"+ monto);
+							}
+							
+							}// si eligio alguna persona
 						}  // fin de else
 						break; // fin contacto
 						
@@ -259,7 +285,7 @@ public class Cliente extends Usuario {
 				String [] subopciones4= dolares.getOpciones();
 				
 				 int opcionDolares= JOptionPane.showOptionDialog(null, 
-					        "Seleccione qué deseas realizar:\n1 ARS=1450 USD", 
+					        "Seleccione qué deseas realizar:\nComprar: $1450\nVender:$1400", 
 					        "Comprar/Verder dinero", 
 					        JOptionPane.DEFAULT_OPTION, 
 					        JOptionPane.INFORMATION_MESSAGE, 
@@ -292,11 +318,41 @@ public class Cliente extends Usuario {
 					        null, subopciones5, subopciones5[0]);
 				 switch (opcionOtras) {
 				case 0:  // agregar contactos
+					
 					String contacto=Validaciones.IngresarString("Ingrese el nombre del contacto");
 					String alias=Validaciones.IngresarString("Ingrese el alias del contacto");
-					int cbu=Validaciones.IngresarInt("Ingrese el cbu/cvu del contacto");
+					boolean existe=false;
 					
-					this.cuenta.getContactos().add(new Contacto(contacto,alias,cbu));
+					  Cliente clienteEncontrado = null;
+					    for (Cliente cli : Admin.getListasClientes()) {
+					        if (cli.getCuenta() != null && cli.getCuenta().getAlias().equalsIgnoreCase(alias) && cli.getNombre_completo().equalsIgnoreCase(contacto) ) {
+					            clienteEncontrado = cli;
+					            existe=true;
+					            break;
+					        }
+					    }
+					    
+					    if (clienteEncontrado == null) {
+					        JOptionPane.showMessageDialog(null, "No existe ningún usuario con ese alias.");
+					        break;
+					    }
+					    
+					    for (Contacto c : this.getCuenta().getContactos()) {
+					        if (c.getAlias().equalsIgnoreCase(alias)) {
+					           JOptionPane.showMessageDialog(null, "Ya tienes agregado un contacto con ese alias.");
+					           existe=false;
+					           break;
+					        }
+					    }
+					    
+					    if (existe) {
+					    	  int cbu = Validaciones.IngresarInt("Ingrese el CBU/CVU del contacto");
+					    		this.cuenta.getContactos().add(new Contacto(contacto,alias,cbu));
+
+							    JOptionPane.showMessageDialog(null, "Contacto agregado correctamente.");
+							
+						}
+					  
 					
 					break;
 				case 1: // ver movimientos
@@ -305,11 +361,6 @@ public class Cliente extends Usuario {
 					}else {
 						JOptionPane.showMessageDialog(null, this.cuenta.getListamov());
 					}
-					
-					
-					break;
-				case 2: // ver saldo
-					JOptionPane.showMessageDialog(null, "Saldo actual en Pesos: "+this.cuenta.getSaldoPesos()+"\nSaldo Actual en Dólares: "+this.cuenta.getSaldoDolar());
 					
 					break;
 				
