@@ -22,7 +22,7 @@ public static void main(String[] args) {
 	Cliente pepe = new Cliente("pepe","0000",false,
 		    "Pepe", "Av.Belgrano 1121", 12345678, 98764321,
 		    "pepe@gmail.com",
-		    new Cuenta(00000001,1000,500,"pepe.mp",mercadoPago)
+		    new Cuenta(1000,500,"pepe.mp",mercadoPago)
 		);
 
 		Usuario.getListusuarios().add(pepe);
@@ -31,7 +31,7 @@ public static void main(String[] args) {
 		Cliente pepa = new Cliente("pepa","1111",false,
 			    "Pepa", "Av.Calchaqui 1311", 87654321, 45483644,
 			    "pepa@gmail.com",
-			    new Cuenta(00000002,10500,10,"pepapig.mp",mercadoPago)
+			    new Cuenta(10500,10,"pepapig.mp",mercadoPago)
 			);
 
 			Usuario.getListusuarios().add(pepa);

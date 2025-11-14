@@ -26,18 +26,6 @@ public class Cliente extends Usuario {
 		this.cuenta = cuenta;
 	}
 
-
-//	public Cliente(String usuario, String contrasenia, boolean esAdmin, String nombre_completo, String direccion,
-//			int dni, int tel, String email) {
-//		super(usuario, contrasenia, esAdmin);
-//		this.nombre_completo = nombre_completo;
-//		this.direccion = direccion;
-//		this.dni = dni;
-//		this.tel = tel;
-//		this.email = email;
-//	}
-
-
 	public String getNombre_completo() {
 		return nombre_completo;
 	}
@@ -94,12 +82,12 @@ public class Cliente extends Usuario {
 		Cliente.cuentasGuardadas = cuentasGuardadas;
 	}
 
-	
 	@Override
 	public String toString() {
-		return "Cliente:\nNombre_completo=" + nombre_completo + ", direccion=" + direccion + ", dni=" + dni + ", tel="
-				+ tel + ", email=" + email + "\n";
+		return "Cliente :\nNombre completo=" + nombre_completo + "\nDireccion=" + direccion + "\nDni=" + dni + "\nTel="
+				+ tel + "\nEmail=" + email + "\nDatos de la cuenta=\nCbu/cvu:"+ getCuenta().getCbu_cvu()+"\nAlias:"+ getCuenta().getAlias() + "\n";
 	}
+	
 
 	@Override
 	public void Menu() {
@@ -185,7 +173,7 @@ public class Cliente extends Usuario {
 								break;// fin de caso caso0/caso 0
 								
 							case 1: // transferencia, solicitar que la persona te transfiera a vos
-								String alias=Validaciones.IngresarString("Ingrese el alias o cbu/cvu");
+								String alias=Validaciones.IngresarString("Ingrese el alias");
 								Cliente destinos=null;
 								
 								for (Cliente client : Admin.getListasClientes()) {
@@ -225,7 +213,7 @@ public class Cliente extends Usuario {
 				    
 				    switch (opcionTransferir) {
 					case 0: // por alias o cbu
-						String alias=Validaciones.IngresarString("Ingrese el alias o cbu/cvu");
+						String alias=Validaciones.IngresarString("Ingrese el alias:");
 						Cliente destinos=null;
 						
 						for (Cliente client : Admin.getListasClientes()) {
@@ -364,6 +352,10 @@ public class Cliente extends Usuario {
 					}
 					
 					break;
+				case 2: //ver datos	
+					
+						JOptionPane.showMessageDialog(null, "Alias:"+this.cuenta.getAlias()+"\nCBU/CVU:"+this.cuenta.getCbu_cvu()+"\nSaldo pesos: "+this.cuenta.getSaldoPesos()+
+								"\nSaldo dolar: "+this.cuenta.getSaldoDolar()+"\nBanco: "+this.cuenta.getBanco());
 				
 				}
 				
@@ -374,6 +366,8 @@ public class Cliente extends Usuario {
 		} while (opcion!=5); // agregar la opcion seria 6
 		
 	}
+
+	
 	
 	
 	

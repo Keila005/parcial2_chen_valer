@@ -40,9 +40,8 @@ public class Admin extends Usuario {
 
 	@Override
 	public String toString() {
-		return "Admin [listasClientes=" + listasClientes + ", listasMovimientos=" + listasMovimientos + "]";
+		return "Admin [departamento=" + departamento + "]";
 	}
-	
 
 	@Override
 	public void Menu() {
@@ -54,6 +53,9 @@ public class Admin extends Usuario {
 	          switch (opcion) {
 	          
 			case 0:		//mostrar clientes	
+				if (listasClientes.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "No hay clientes");
+				}else {
 					String[] gente = new String[listasClientes.size()];
 					for (int i = 0; i < gente.length; i++) {
 						gente[i] = listasClientes.get(i).getNombre_completo();
@@ -64,6 +66,8 @@ public class Admin extends Usuario {
 							0,0 ,null, gente, gente[0]);
 					
 				JOptionPane.showMessageDialog(null, listasClientes.get(persona));
+				}
+					
 				break;
 			case 1:		//eliminar clientes	
 				if (listasClientes.isEmpty()) {

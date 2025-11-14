@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 public class Cuenta {
 	private int cbu_cvu;
-	private static int num=00000100;
+	private static int num=1000;
 	private  double saldoPesos;
 	private double saldoDolar;
 	private String alias;
@@ -16,7 +16,7 @@ public class Cuenta {
 	private LinkedList<Movimiento> listamov = new LinkedList<Movimiento>();
 	private LinkedList<Contacto> contactos = new LinkedList<Contacto>();
 	
-	public Cuenta( double saldoPesos, double saldoDolar, String alias,Banco banco) {
+	public Cuenta(double saldoPesos, double saldoDolar, String alias,Banco banco) {
 		super();
 		num++;
 		this.cbu_cvu = num;
@@ -40,9 +40,6 @@ public class Cuenta {
 		this.contactos = new LinkedList<Contacto>();
 	}
 
-	public Cuenta() {
-		super();
-	}
 
 	public int getCbu_cvu() {
 		return cbu_cvu;
@@ -103,9 +100,10 @@ public class Cuenta {
 
 	@Override
 	public String toString() {
-		return "Cuenta:\nCbu_cvu=" + cbu_cvu +"\nSaldoPesos=" + saldoPesos + "\\nSaldoDolar=" + saldoDolar + "\nAlias="+ alias + "\nBanco=" + banco + "\nListamov="+ listamov + "----------\n";
+		return "\nCbu_cvu=" + cbu_cvu +"\nSaldoPesos=" + saldoPesos + "\nSaldoDolar=" + saldoDolar + "\nAlias="+ alias + "\nBanco=" + banco + "\nListamov="+ listamov + "----------\n";
 	}
 		
+
 	public void transferirDinero(double monto,String nombreCliente, Cuenta destino) {
 		if (this.saldoPesos>=monto) {
 			this.saldoPesos-=monto;
