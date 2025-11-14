@@ -27,13 +27,15 @@ public class Cliente extends Usuario {
 	}
 
 
-		super(usuario, contrasenia, esAdmin);
-		this.nombre_completo = nombre_completo;
-		this.direccion = direccion;
-		this.dni = dni;
-		this.tel = tel;
-		this.email = email;
-	}
+//	public Cliente(String usuario, String contrasenia, boolean esAdmin, String nombre_completo, String direccion,
+//			int dni, int tel, String email) {
+//		super(usuario, contrasenia, esAdmin);
+//		this.nombre_completo = nombre_completo;
+//		this.direccion = direccion;
+//		this.dni = dni;
+//		this.tel = tel;
+//		this.email = email;
+//	}
 
 
 	public String getNombre_completo() {
@@ -182,7 +184,7 @@ public class Cliente extends Usuario {
 							 
 								break;// fin de caso caso0/caso 0
 								
-							case 1: // transferencia
+							case 1: // transferencia, solicitar que la persona te transfiera a vos
 								String alias=Validaciones.IngresarString("Ingrese el alias o cbu/cvu");
 								Cliente destinos=null;
 								
@@ -198,9 +200,9 @@ public class Cliente extends Usuario {
 					     
 								        break; // salir del caso
 								    }else {
-								    	monto = Validaciones.IngresarDouble("Ingrese la cantidad de dinero que deseas transferir al \nAlias: "+alias +"\nNombre:"+ destinos.getNombre_completo());
+								    	monto = Validaciones.IngresarDouble("Ingrese la cantidad de dinero que deseas pedir al \nAlias: "+alias +"\nNombre:"+ destinos.getNombre_completo());
 								    	
-								this.cuenta.enviarDinero(monto, this.nombre_completo,destinos.getCuenta());
+							this.cuenta.enviarDinero(monto, this.nombre_completo,destinos.getCuenta());
 								
 									}
 								
@@ -263,13 +265,14 @@ public class Cliente extends Usuario {
 								 if (contac.getNombre().equals(destino)) {
 									enviado=contac.getCuenta();
 								}
-							}
-							 if (enviado!=null) { // si se recibio una cuenta destino
-						 monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero que necesitas transferir a "+ destino);
-									this.getCuenta().transferirDinero(monto,this.nombre_completo,enviado);
-						
-						JOptionPane.showMessageDialog(null, "Transferiste exitosamente a "+destino+" $"+ monto);
-							}
+								 if (enviado!=null) { // si se recibio una cuenta destino
+									 monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero que necesitas transferir a "+ destino);
+												this.getCuenta().transferirDinero(monto,this.nombre_completo,enviado);
+									
+									JOptionPane.showMessageDialog(null, "Transferiste exitosamente a "+destino+" $"+ monto);
+										}
+							}// fin del FOR
+							
 							
 							}// si eligio alguna persona
 						}  // fin de else
