@@ -16,16 +16,28 @@ import LogicLayer.Validaciones;
 public class Main {
 public static void main(String[] args) {
 	
+	
 	Banco mercadoPago=new Banco("Banco virtual Keith");
-//     Cliente cliente = new Cliente("pepe", "0000", false, "Pepe", "Av.Belgrano 1121", 12345678, 987654321, "pepe@gmail.com");
-//     
-     Usuario.getListusuarios().add(new Cliente("pepe", "0000", false, "Pepe", "Av.Belgrano 1121", 12345678, 98764321, "pepe@gmail.com",new Cuenta(00000001,1000,500,"pepe.mp",mercadoPago)));
-     
-     Admin.getListasClientes().add(new Cliente("pepe", "0000", false, "Pepe", "Av.Belgrano 1121", 12345678, 98764321, "pepe@gmail.com",new Cuenta(00000001,1000,500,"pepe.mp",mercadoPago)));
-    
-     Usuario.getListusuarios().add(new Cliente("pepa", "1111", false, "Pepa", "Av.Calchaqui 1311", 87654321, 45483644, "pepa@gmail.com",new Cuenta(00000002,10500,10,"pepapig.mp",mercadoPago)));
-     
-       Admin.getListasClientes().add(new Cliente("pepa", "1111", false, "Pepa", "Av.Calchaqui 1311", 87654321, 45483644, "pepa@gmail.com",new Cuenta(00000002,10500,10,"pepapig.mp",mercadoPago)));
+	       
+	Cliente pepe = new Cliente("pepe","0000",false,
+		    "Pepe", "Av.Belgrano 1121", 12345678, 98764321,
+		    "pepe@gmail.com",
+		    new Cuenta(00000001,1000,500,"pepe.mp",mercadoPago)
+		);
+
+		Usuario.getListusuarios().add(pepe);
+		Admin.getListasClientes().add(pepe);
+
+		Cliente pepa = new Cliente("pepa","1111",false,
+			    "Pepa", "Av.Calchaqui 1311", 87654321, 45483644,
+			    "pepa@gmail.com",
+			    new Cuenta(00000002,10500,10,"pepapig.mp",mercadoPago)
+			);
+
+			Usuario.getListusuarios().add(pepa);
+			Admin.getListasClientes().add(pepa);
+
+	
        
      Admin admin = new Admin("admin", "1234", true,"IT");
      Usuario.getListusuarios().add(admin);

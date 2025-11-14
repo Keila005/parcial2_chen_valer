@@ -147,19 +147,22 @@ public class Cuenta {
 	} // fin de ingresar
 	
 	public void enviarDinero(double monto,String nombreCliente,Cuenta destino) {
+		
 		if (destino.getSaldoPesos()>=monto) {
-			double suPlata=destino.getSaldoPesos();
-		double plataMenos=suPlata-monto;
+			destino.setSaldoPesos(destino.getSaldoPesos()-monto);
 		this.saldoPesos+=monto;
 		
 		// el que recibio dinero
-		this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar,monto));
+		this.listamov.add(new Movimiento(nombreCliente,Tipo_operacion.Ingresar,monto));
 		Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Ingresar,monto));
 		
 		// el que envia el dinero( le transfirio)
-		destino.listamov.add(new Movimiento("Usted con alias: "+destino.getAlias()+" ingreso plata a  "+nombreCliente,Tipo_operacion.Ingresar,monto));
-		 Admin.getListasMovimientos().add(new Movimiento("El alias: "+destino.getAlias()+" ingreso plata a "+nombreCliente,Tipo_operacion.Ingresar,monto));
-		
+		 destino.getListamov().add(
+		            new Movimiento(
+		                "Usted con alias:"+ destino.getAlias()+"transfirió dinero a " + nombreCliente,Tipo_operacion.Transferir, monto));
+		        Admin.getListasMovimientos().add(
+		            new Movimiento( "El alias " + destino.getAlias() + " transfirió/ingreso a " + nombreCliente,Tipo_operacion.Transferir,monto));
+		       	
 			JOptionPane.showMessageDialog(null, "Se retiro el dinero correctamente por: "+destino.getAlias()+".\nSaldo actual: "+this.saldoPesos);
 		}else {
 			JOptionPane.showMessageDialog(null, "El alias ingresado no tiene el saldo suficiente para transferirte");

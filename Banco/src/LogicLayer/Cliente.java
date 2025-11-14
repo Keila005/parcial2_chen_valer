@@ -27,8 +27,6 @@ public class Cliente extends Usuario {
 	}
 
 
-	public Cliente(String usuario, String contrasenia, boolean esAdmin, String nombre_completo, String direccion,
-			int dni, int tel, String email) {
 		super(usuario, contrasenia, esAdmin);
 		this.nombre_completo = nombre_completo;
 		this.direccion = direccion;
