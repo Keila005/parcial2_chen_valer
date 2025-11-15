@@ -255,24 +255,69 @@ public class Cliente extends Usuario {
 						String destino=(String)JOptionPane.showInputDialog(null,"Seleccione a quien deseas transferir","Transferencia",0,
 								new ImageIcon(Cliente.class.getResource("/img/contacto.png")),persona,persona[0]);
 	
-						if (destino != null) { 
-							
-							 Cuenta enviado=null;
-							 for (Contacto contac : this.cuenta.getContactos()) {
-								 if (contac.getNombre().equals(destino)) {
-									enviado=contac.getCuenta();
-								}
-								 if (enviado!=null) { // si se recibio una cuenta destino
-									 monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero que necesitas transferir a "+ destino);
-												this.getCuenta().transferirDinero(monto,this.nombre_completo,enviado);
-									
-									JOptionPane.showMessageDialog(null, "Transferiste exitosamente a "+destino+" $"+ monto,"Existosamente",
-											JOptionPane.DEFAULT_OPTION, new ImageIcon(Cliente.class.getResource("/img/correcto.png")));
-										}
-							}// fin del FOR
-							
-							
-							}// si eligio alguna persona
+//						if (destino != null) { 
+//							
+//							 Cuenta enviado=null;
+//								
+//							 for (Contacto contac : this.cuenta.getContactos()) {
+//								 if (contac.getNombre().equals(destino)) {
+//									enviado=contac.getCuenta();
+//									break;
+//								}
+//								
+//							}// fin del FOR
+//							 
+//							 if (enviado!=null) { // si se recibio una cuenta destino
+//								
+//								 monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero que necesitas transferir a "+ destino);
+//											this.getCuenta().transferirDinero(monto,this.nombre_completo,enviado);
+//								
+//								JOptionPane.showMessageDialog(null, "Transferiste exitosamente a "+destino+" $"+ monto,"Existosamente",
+//										JOptionPane.DEFAULT_OPTION, new ImageIcon(Cliente.class.getResource("/img/correcto.png")));
+//									}
+//							
+//							}// si eligio alguna persona
+						Cuenta enviado = null;
+						boolean encontrado = false;
+
+						// 1. Busco en tus contactos cuál se eligió
+						for (Contacto cont : this.cuenta.getContactos()) {
+						    if (cont.getNombre().equals(destino)) {
+						        // guardo su alias o CBU
+						        String aliasContacto = cont.getAlias();
+						        
+						        // 2. busco la cuenta REAL de ese contacto entre todos los clientes
+						        for (Cliente cli : Admin.getListasClientes()) {
+						            if (cli.getCuenta() != null &&
+						                cli.getCuenta().getAlias().equalsIgnoreCase(aliasContacto)) {
+						                
+						                enviado = cli.getCuenta();  
+						                encontrado = true;
+						                break;
+						            }
+						        }
+						        break;
+						    }
+						}
+
+						// 3. Si lo encontré → pedir monto
+						if (encontrado && enviado != null) {
+						     monto = Validaciones.IngresarDouble("¿Cuánto desea transferir a " + destino + "?");
+						    this.getCuenta().transferirDinero(monto, this.nombre_completo, enviado);
+
+						    JOptionPane.showMessageDialog(null,
+						        "Transferiste exitosamente a " + destino + " $" + monto,
+						        "Éxito",
+						        JOptionPane.DEFAULT_OPTION,
+						        new ImageIcon(Cliente.class.getResource("/img/correcto.png")));
+						} else {
+						    JOptionPane.showMessageDialog(null,
+						        "No se encuentra la cuenta del contacto.",
+						        "Error",
+						        JOptionPane.DEFAULT_OPTION,
+						        new ImageIcon(Cliente.class.getResource("/img/nohay.png")));
+						}
+
 						}  // fin de else
 						break; // fin contacto
 						
@@ -324,7 +369,8 @@ public class Cliente extends Usuario {
 					
 					  Cliente clienteEncontrado = null;
 					    for (Cliente cli : Admin.getListasClientes()) {
-					        if (cli.getCuenta() != null && cli.getCuenta().getAlias().equalsIgnoreCase(alias) && cli.getNombre_completo().equalsIgnoreCase(contacto) ) {
+					        if (cli.getCuenta() != null && cli.getCuenta().getAlias().equalsIgnoreCase(alias) 
+					        		&& cli.getNombre_completo().equalsIgnoreCase(contacto) ) {
 					            clienteEncontrado = cli;
 					            existe=true;
 					            break;
