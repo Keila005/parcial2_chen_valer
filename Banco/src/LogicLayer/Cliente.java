@@ -2,6 +2,7 @@ package LogicLayer;
 
 import java.util.LinkedList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Cliente extends Usuario {
@@ -102,7 +103,8 @@ public class Cliente extends Usuario {
 		do {
 	
 			opcion= JOptionPane.showOptionDialog(null, "Elija alguna operacion\n"+"Saldo actual en Pesos: "+this.cuenta.getSaldoPesos()+"\nSaldo actual en Dólares: "+this.cuenta.getSaldoDolar(),
-	                   "Menú cliente", 0,0, null, nombres, nombres[0]);
+	                   "Menú cliente", 0,JOptionPane.DEFAULT_OPTION, 
+	                   new ImageIcon(Cliente.class.getResource("/img/cliente.png")), nombres, nombres[0]);
 			double monto;
 			switch (opcion) {
 			case 0:// retirar dinero
@@ -113,15 +115,16 @@ public class Cliente extends Usuario {
 				    int opcionRetiro = JOptionPane.showOptionDialog(null, 
 				        "Seleccione cómo desea retirar dinero:", 
 				        "Retirar dinero", 
+				        0, 
 				        JOptionPane.DEFAULT_OPTION, 
-				        JOptionPane.INFORMATION_MESSAGE, 
-				        null, subopciones, subopciones[0]);
+				        new ImageIcon(Cliente.class.getResource("/img/retirar.jpg")), subopciones, subopciones[0]);
 				    String lugarSeleccionado="";
 						    switch (opcionRetiro) {
 						   
 							case 0:// en locales
 								String []locales= {"Rapipago","Pago Fácil","Carrefour","Coto"};
-								String seleccion=(String)JOptionPane.showInputDialog(null,"Seleccione el lugar que deseas retirar dinero","Locales",0,null,locales,locales[0]);
+								String seleccion=(String)JOptionPane.showInputDialog(null,"Seleccione el lugar que deseas retirar dinero","Locales",0,
+										new ImageIcon(Cliente.class.getResource("/img/locales.png")),locales,locales[0]);
 	
 								if (seleccion != null) { 
 								    lugarSeleccionado = seleccion; // guardar el nombre
@@ -130,7 +133,8 @@ public class Cliente extends Usuario {
 								break;// fin de caso 0
 							case 1: // en agencias
 								String []agencias= {"Banco Nación", "Banco Provincia", "Santander", "Galicia"};
-								String eleccion=(String)JOptionPane.showInputDialog(null,"Seleccione el lugar que deseas retirar dinero","Locales",0,null,agencias,agencias[0]);
+								String eleccion=(String)JOptionPane.showInputDialog(null,"Seleccione el lugar que deseas retirar dinero","Locales",0,
+										new ImageIcon(Cliente.class.getResource("/img/agencias.png")),agencias,agencias[0]);
 								if (eleccion != null) { 
 								    lugarSeleccionado = eleccion; // guardar el nombre
 								}
@@ -154,16 +158,17 @@ public class Cliente extends Usuario {
 				    
 				    int opcionIngresar = JOptionPane.showOptionDialog(null, 
 				        "Seleccione cómo deseas ingresar dinero:", 
-				        "Ingresar dinero", 
+				        "Ingresar dinero",0,
 				        JOptionPane.DEFAULT_OPTION, 
-				        JOptionPane.INFORMATION_MESSAGE, 
-				        null, subopciones2, subopciones2[0]);
+				        new ImageIcon(Cliente.class.getResource("/img/ingresar.png")), 
+				        subopciones2, subopciones2[0]);
 				 
 						    switch (opcionIngresar) {
 							case 0:// en efectivo
 								
 								String []locales= {"Rapipago","Carrefour","Coto","Banco Nación","Galicia"};
-								String seleccion=(String)JOptionPane.showInputDialog(null,"Seleccione el lugar que deseas retirar dinero","Locales",0,null,locales,locales[0]);
+								String seleccion=(String)JOptionPane.showInputDialog(null,"Seleccione el lugar que deseas retirar dinero","Locales",
+										0, new ImageIcon(Cliente.class.getResource("/img/efectivo.png")),locales,locales[0]);
 	
 								if (seleccion != null) { 
 							monto = Validaciones.IngresarDouble("Ingrese la cantidad de dinero que deseas ingresar desde " + seleccion);
@@ -184,7 +189,8 @@ public class Cliente extends Usuario {
 								}// fin del FOR
 								
 								  if (destinos == null) {
-					       JOptionPane.showMessageDialog(null, "No existe ningún usuario con ese alias.");
+					       JOptionPane.showMessageDialog(null, "No existe ningún usuario con ese alias.","Error alias",JOptionPane.DEFAULT_OPTION,
+					    		   new ImageIcon(Cliente.class.getResource("/img/nohay.png")));
 					     
 								        break; // salir del caso
 								    }else {
@@ -206,10 +212,10 @@ public class Cliente extends Usuario {
 				    
 				    int opcionTransferir = JOptionPane.showOptionDialog(null, 
 				        "Seleccione cómo deseas trasnferir dinero:", 
-				        "Transferir dinero", 
+				        "Transferir dinero",0, 
 				        JOptionPane.DEFAULT_OPTION, 
-				        JOptionPane.INFORMATION_MESSAGE, 
-				        null, subopciones3, subopciones3[0]);
+				        new ImageIcon(Cliente.class.getResource("/img/transferir.png")), 
+				        subopciones3, subopciones3[0]);
 				    
 				    switch (opcionTransferir) {
 					case 0: // por alias o cbu
@@ -224,7 +230,9 @@ public class Cliente extends Usuario {
 						}// fin del FOR
 						
 						  if (destinos == null) {
-						        JOptionPane.showMessageDialog(null, "No existe ningún usuario con ese alias.");
+						        JOptionPane.showMessageDialog(null, "No existe ningún usuario con ese alias.","Error alias",
+						        		JOptionPane.DEFAULT_OPTION,
+							    		   new ImageIcon(Cliente.class.getResource("/img/nohay.png")));
 						        break; // salir del caso
 						    }else {
 						    	monto = Validaciones.IngresarDouble("Ingrese la cantidad de dinero que deseas transferir al \nAlias: "+alias +"\nNombre:"+ destinos.getNombre_completo());
@@ -244,7 +252,8 @@ public class Cliente extends Usuario {
 							persona[i] = this.cuenta.getContactos().get(i).getNombre();
 						}
 						
-						String destino=(String)JOptionPane.showInputDialog(null,"Seleccione a quien deseas transferir","Transferencia",0,null,persona,persona[0]);
+						String destino=(String)JOptionPane.showInputDialog(null,"Seleccione a quien deseas transferir","Transferencia",0,
+								new ImageIcon(Cliente.class.getResource("/img/contacto.png")),persona,persona[0]);
 	
 						if (destino != null) { 
 							
@@ -257,7 +266,8 @@ public class Cliente extends Usuario {
 									 monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero que necesitas transferir a "+ destino);
 												this.getCuenta().transferirDinero(monto,this.nombre_completo,enviado);
 									
-									JOptionPane.showMessageDialog(null, "Transferiste exitosamente a "+destino+" $"+ monto);
+									JOptionPane.showMessageDialog(null, "Transferiste exitosamente a "+destino+" $"+ monto,"Existosamente",
+											JOptionPane.DEFAULT_OPTION, new ImageIcon(Cliente.class.getResource("/img/correcto.png")));
 										}
 							}// fin del FOR
 							
@@ -275,10 +285,10 @@ public class Cliente extends Usuario {
 				
 				 int opcionDolares= JOptionPane.showOptionDialog(null, 
 					        "Seleccione qué deseas realizar:\nComprar: $1450\nVender:$1400", 
-					        "Comprar/Verder dinero", 
+					        "Comprar/Verder dinero", 0,
 					        JOptionPane.DEFAULT_OPTION, 
-					        JOptionPane.INFORMATION_MESSAGE, 
-					        null, subopciones4, subopciones4[0]);
+					        new ImageIcon(Cliente.class.getResource("/img/dolares .png")), 
+					       subopciones4, subopciones4[0]);
 				 switch (opcionDolares) {
 				case 0: // comprar
 					
@@ -301,10 +311,10 @@ public class Cliente extends Usuario {
 				
 				 int opcionOtras= JOptionPane.showOptionDialog(null, 
 					        "Seleccione qué deseas realizar:", 
-					        "Comprar/Verder dinero", 
+					        "Comprar/Verder dinero", 0,
 					        JOptionPane.DEFAULT_OPTION, 
-					        JOptionPane.INFORMATION_MESSAGE, 
-					        null, subopciones5, subopciones5[0]);
+					        new ImageIcon(Cliente.class.getResource("/img/otro.png")), 
+					      subopciones5, subopciones5[0]);
 				 switch (opcionOtras) {
 				case 0:  // agregar contactos
 					
@@ -322,13 +332,15 @@ public class Cliente extends Usuario {
 					    }
 					    
 					    if (clienteEncontrado == null) {
-					        JOptionPane.showMessageDialog(null, "No existe ningún usuario con ese alias.");
+					        JOptionPane.showMessageDialog(null, "No existe ningún usuario con ese alias.","Error alias",JOptionPane.DEFAULT_OPTION,
+					        		new ImageIcon(Cliente.class.getResource("/img/nohay.png")));
 					        break;
 					    }
 					    
 					    for (Contacto c : this.getCuenta().getContactos()) {
 					        if (c.getAlias().equalsIgnoreCase(alias)) {
-					           JOptionPane.showMessageDialog(null, "Ya tienes agregado un contacto con ese alias.");
+					           JOptionPane.showMessageDialog(null, "Ya tienes agregado un contacto con ese alias.","Alias existente",JOptionPane.DEFAULT_OPTION,
+					        		   new ImageIcon(Cliente.class.getResource("/img/nohay.png")));
 					           existe=false;
 					           break;
 					        }
@@ -338,7 +350,8 @@ public class Cliente extends Usuario {
 					    	  int cbu = Validaciones.IngresarInt("Ingrese el CBU/CVU del contacto");
 					    		this.cuenta.getContactos().add(new Contacto(contacto,alias,cbu));
 
-							    JOptionPane.showMessageDialog(null, "Contacto agregado correctamente.");
+							    JOptionPane.showMessageDialog(null, "Contacto agregado correctamente.","Agregado",JOptionPane.DEFAULT_OPTION,
+							    		new ImageIcon(Cliente.class.getResource("/img/correcto.png")));
 							
 						}
 					  
@@ -346,9 +359,11 @@ public class Cliente extends Usuario {
 					break;
 				case 1: // ver movimientos
 					if (this.cuenta.getListamov().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "No hay ningun movimiento");
+						JOptionPane.showMessageDialog(null, "No hay ningun movimiento","Vacio",JOptionPane.DEFAULT_OPTION,
+								new ImageIcon(Cliente.class.getResource("/img/nohay.png")));
 					}else {
-						JOptionPane.showMessageDialog(null, this.cuenta.getListamov());
+						JOptionPane.showMessageDialog(null, this.cuenta.getListamov(),"Movimientos",JOptionPane.DEFAULT_OPTION,
+								new ImageIcon(Cliente.class.getResource("/img/mostrar.png")));
 					}
 					
 					break;

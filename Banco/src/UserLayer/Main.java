@@ -43,18 +43,22 @@ public static void main(String[] args) {
      Usuario.getListusuarios().add(admin);
 	
 	JOptionPane.showMessageDialog(null, "Bienvenidos a la billetera virtual Keith","Banco Keith", JOptionPane.DEFAULT_OPTION,
-			new ImageIcon(Main.class.getResource("../img/banco.png")));
+			new ImageIcon(Main.class.getResource("/img/banco.png")));
 
 	String[] inicio = {"Login", "Registrar","Salir"};
 	int eleccion;
 	
 	do {
-		 eleccion = JOptionPane.showOptionDialog(null, "Elija alguna opción",
-                 "Banco Enith", 0,0, null, inicio, inicio[0]);
+		
+		 eleccion = JOptionPane.showOptionDialog(null, 
+				 "Elija alguna opción",
+                 "Banco Enith",0,JOptionPane.DEFAULT_OPTION,
+                 new ImageIcon(Main.class.getResource("/img/registrar.png")), inicio, inicio[0]);
 
 		//por si se apreta el boton de la cruz o cancelar aparece eso
 		if (eleccion==-1 || eleccion==2) {
-			JOptionPane.showMessageDialog(null, "Saliendo del sistema...");
+			JOptionPane.showMessageDialog(null, "Saliendo del sistema...","Salir", 
+					JOptionPane.DEFAULT_OPTION,new ImageIcon(Main.class.getResource("/img/cargando.gif")));
 			break;
 		}
 		switch (eleccion) {
@@ -64,7 +68,8 @@ public static void main(String[] args) {
 			Usuario logueado = Usuario.Login(usuario,contra);
 			if (logueado==null) {
 				
-				 JOptionPane.showMessageDialog(null, "Volviendo al menú principal...","Cargando",JOptionPane.DEFAULT_OPTION,new ImageIcon(Main.class.getResource("../img/cargando.png")));
+				 JOptionPane.showMessageDialog(null, "Volviendo al menú principal...","Cargando",
+						 JOptionPane.DEFAULT_OPTION,new ImageIcon(Main.class.getResource("/img/cargando.gif")));
 	                break; 
 			}else {
 				logueado.Menu();
@@ -79,7 +84,8 @@ public static void main(String[] args) {
 			
 		}
 	} while (eleccion!=2);
-	JOptionPane.showMessageDialog(null, "Programa finalizado.");
+	JOptionPane.showMessageDialog(null, "Programa finalizado.","Cierre",JOptionPane.DEFAULT_OPTION,
+			new ImageIcon(Main.class.getResource("/img/wave-panda.gif")));
 
 	
 }//fin de main

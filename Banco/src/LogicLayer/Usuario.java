@@ -2,6 +2,7 @@ package LogicLayer;
 
 import java.util.LinkedList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public abstract class Usuario {
@@ -79,9 +80,11 @@ public abstract class Usuario {
 		    }
 
 		    if (usuarioExiste) {
-		        JOptionPane.showMessageDialog(null, "La contraseña es incorrecta");
+		        JOptionPane.showMessageDialog(null, "La contraseña es incorrecta","Incorrecto",JOptionPane.DEFAULT_OPTION,
+		        		new ImageIcon(Usuario.class.getResource("/img/nohay.png")));
 		    } else {
-		        JOptionPane.showMessageDialog(null, "El usuario no está registrado");
+		        JOptionPane.showMessageDialog(null, "El usuario no está registrado","No registrado",JOptionPane.DEFAULT_OPTION,
+		        		new ImageIcon(Usuario.class.getResource("/img/nohay.png")));
 		    }
 		    return null;
 	
@@ -94,7 +97,8 @@ public abstract class Usuario {
 		
 		for (Usuario user : listusuarios) {
 			if (user.getUsuario().equalsIgnoreCase(nuevoUser)) {
-	JOptionPane.showMessageDialog(null, "El usuario ya esta registrado, debes ir al Login");
+	JOptionPane.showMessageDialog(null, "El usuario ya esta registrado, debes ir al Login","Ya registrado",JOptionPane.DEFAULT_OPTION,
+			new ImageIcon(Usuario.class.getResource("/img/nohay.png")));
 	return; //salir del metodo if
 				
 			}// fin del if, si ya existe		
@@ -114,7 +118,8 @@ public abstract class Usuario {
 		        for (Cliente client : Admin.getListasClientes()) {
 		            if (client.getCuenta() != null && client.getCuenta().getAlias().equalsIgnoreCase(alias)) {
 		                aliasExiste = true;
-		                JOptionPane.showMessageDialog(null, "El alias ya existe, ingrese otro.");
+		                JOptionPane.showMessageDialog(null, "El alias ya existe, ingrese otro.","Alias existente",
+		                		JOptionPane.DEFAULT_OPTION,	new ImageIcon(Usuario.class.getResource("/img/nohay.png")));
 		                break;
 		            }
 		        }
@@ -125,7 +130,8 @@ public abstract class Usuario {
 		    Usuario.getListusuarios().add(nuevoCliente); //guardar en la lista de usuarios
 		    Admin.getListasClientes().add(nuevoCliente); //guardar en la lista de clientes
 		    
-		    JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.\nYa puede iniciar sesión.");
+		    JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.\nYa puede iniciar sesión.","Registrado con éxito",
+		    		JOptionPane.DEFAULT_OPTION,	new ImageIcon(Usuario.class.getResource("/img/correcto.png")));
 		  
 		    
 		    return;// luego de registar y que se guarde el dato(en la lista de usuarios), debe ir al login 
