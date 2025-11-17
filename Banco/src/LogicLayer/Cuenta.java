@@ -111,9 +111,6 @@ public class Cuenta {
 			
 			destino.setSaldoPesos(destino.getSaldoPesos()+monto);
 			
-			JOptionPane.showMessageDialog(null, "Saldo actual: "+this.saldoPesos,"Transferencia",JOptionPane.DEFAULT_OPTION,
-					new ImageIcon(Cuenta.class.getResource("/img/correcto.png")));
-			
 			//movimiento para el que transfiere
 			this.listamov.add(new Movimiento(nombreCliente+" transfirió a "+destino.getAlias(), Tipo_operacion.Transferir,monto));
 			
@@ -123,18 +120,18 @@ public class Cuenta {
 		destino.listamov.add(new Movimiento("Usted con alias: "+destino.getAlias()+" recibió de "+nombreCliente,Tipo_operacion.Transferir,monto));
 		 Admin.getListasMovimientos().add(new Movimiento("El alias: "+destino.getAlias()+" recibió de "+nombreCliente,Tipo_operacion.Transferir,monto));
 		}else {
-			JOptionPane.showMessageDialog(null, "No tenes el saldo suficiente para transferir");
+			JOptionPane.showMessageDialog(null, "No tenes el saldo suficiente para transferir","Saldo insuficiente",JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/nohay.png")));
 		}
 	}// fin de transferir
 	
 	public void retirarDinero(double monto,String nombreCliente,String lugarSeleccionado) {
 		if (this.saldoPesos>=monto) {
 			this.saldoPesos-=monto;
-			JOptionPane.showMessageDialog(null, "Se retiro el dinero correctamente en:"+lugarSeleccionado+".\nSaldo actual: "+this.saldoPesos);
+			JOptionPane.showMessageDialog(null, "Se retiro el dinero correctamente en: "+lugarSeleccionado+".\nSaldo actual: "+this.saldoPesos,"Retirar",JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/correcto.png")));
 			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Retirar,monto));
 			Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Retirar,monto));
 		}else {
-			JOptionPane.showMessageDialog(null, "No tenes el saldo suficiente para retira dinero");
+			JOptionPane.showMessageDialog(null, "No tenes el saldo suficiente para retirar esa cantidad de dinero","Saldo insuficiente",JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/nohay.png")));
 		}
 	} // fin de retirar
 	
@@ -148,33 +145,6 @@ public class Cuenta {
 					"Correcto",JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/correcto.png")));
 		
 	} // fin de ingresar
-	
-	public void enviarDinero(double monto,String nombreCliente,Cuenta destino) {
-		
-		if (destino.getSaldoPesos()>=monto) {
-			destino.setSaldoPesos(destino.getSaldoPesos()-monto);
-		this.saldoPesos+=monto;
-		
-		// el que recibio dinero
-		this.listamov.add(new Movimiento(nombreCliente,Tipo_operacion.Ingresar,monto));
-		Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Ingresar,monto));
-		
-		// el que envia el dinero( le transfirio)
-		 destino.getListamov().add(
-		            new Movimiento(
-		                "Usted con alias:"+ destino.getAlias()+" transfirió dinero a " + nombreCliente,Tipo_operacion.Transferir, monto));
-		        Admin.getListasMovimientos().add(
-		            new Movimiento( "El alias " + destino.getAlias() + " transfirió/ingreso a " + nombreCliente,Tipo_operacion.Transferir,monto));
-		       	
-			JOptionPane.showMessageDialog(null, "Se retiro el dinero correctamente por: "+destino.getAlias()+".\nSaldo actual: "+this.saldoPesos,
-					"Correcto",JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/correcto.png")));
-		}else {
-			JOptionPane.showMessageDialog(null, "El alias ingresado no tiene el saldo suficiente para transferirte","Saldo insuficiente",
-					JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/nohay.png")));
-		}
-		
-	}
-	
 	
 	public void comprarDolares(double monto,String nombreCliente) { //ingresar la plata en pesos que se quiere vender
 		  double valorDolarCompra = 1450; 

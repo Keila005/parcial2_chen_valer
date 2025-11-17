@@ -177,28 +177,9 @@ public class Cliente extends Usuario {
 							 
 								break;// fin de caso caso0/caso 0
 								
-							case 1: // transferencia, solicitar que la persona te transfiera a vos
-								String alias=Validaciones.IngresarString("Ingrese el alias");
-								Cliente destinos=null;
+							case 1: // transferencia
 								
-								for (Cliente client : Admin.getListasClientes()) {
-								if (client.getCuenta()!= null && client.getCuenta().getAlias().equalsIgnoreCase(alias)) {
-								            destinos = client;
-								            break;
-								        }
-								}// fin del FOR
-								
-								  if (destinos == null) {
-					       JOptionPane.showMessageDialog(null, "No existe ningún usuario con ese alias.","Error alias",JOptionPane.DEFAULT_OPTION,
-					    		   new ImageIcon(Cliente.class.getResource("/img/nohay.png")));
-					     
-								        break; // salir del caso
-								    }else {
-								    	monto = Validaciones.IngresarDouble("Ingrese la cantidad de dinero que deseas pedir al \nAlias: "+alias +"\nNombre:"+ destinos.getNombre_completo());
-								    	
-							this.cuenta.enviarDinero(monto, this.nombre_completo,destinos.getCuenta());
-								
-									}
+						JOptionPane.showMessageDialog(null,"Para ingresar con transferencia debes proporcionar tus datos a la otra persona para que pueda transferirte \n"+ "ALIAS: "+this.cuenta.getAlias()+"\nCBU/CVU: "+this.cuenta.getCbu_cvu()+"\nEMAIL: "+this.email );
 								
 								break;// fin del caso 0/caso1
 										
@@ -308,7 +289,7 @@ public class Cliente extends Usuario {
 						    this.getCuenta().transferirDinero(monto, this.nombre_completo, enviado);
 
 						    JOptionPane.showMessageDialog(null,
-						        "Transferiste exitosamente a " + destino + " $" + monto,
+						        "Transferiste exitosamente a " + destino + " $" + monto+"\nSaldo actual: "+this.cuenta.getSaldoPesos(),
 						        "Éxito",
 						        JOptionPane.DEFAULT_OPTION,
 						        new ImageIcon(Cliente.class.getResource("/img/correcto.png")));
