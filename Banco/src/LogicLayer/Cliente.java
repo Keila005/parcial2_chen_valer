@@ -277,16 +277,18 @@ public class Cliente extends Usuario {
 //									}
 //							
 //							}// si eligio alguna persona
+//						
+						// FORMA funciona
 						Cuenta enviado = null;
 						boolean encontrado = false;
 
-						// 1. Busco en tus contactos cuál se eligió
+						//  Busco en tus contactos cuál se eligió
 						for (Contacto cont : this.cuenta.getContactos()) {
 						    if (cont.getNombre().equals(destino)) {
-						        // guardo su alias o CBU
+						        // guardo su alias
 						        String aliasContacto = cont.getAlias();
 						        
-						        // 2. busco la cuenta REAL de ese contacto entre todos los clientes
+						        // busco la cuenta REAL de ese contacto entre todos los clientes
 						        for (Cliente cli : Admin.getListasClientes()) {
 						            if (cli.getCuenta() != null &&
 						                cli.getCuenta().getAlias().equalsIgnoreCase(aliasContacto)) {
@@ -300,7 +302,7 @@ public class Cliente extends Usuario {
 						    }
 						}
 
-						// 3. Si lo encontré → pedir monto
+						// Si lo encontré entonces pedir monto
 						if (encontrado && enviado != null) {
 						     monto = Validaciones.IngresarDouble("¿Cuánto desea transferir a " + destino + "?");
 						    this.getCuenta().transferirDinero(monto, this.nombre_completo, enviado);
@@ -368,6 +370,7 @@ public class Cliente extends Usuario {
 					boolean existe=false;
 					
 					  Cliente clienteEncontrado = null;
+					
 					    for (Cliente cli : Admin.getListasClientes()) {
 					        if (cli.getCuenta() != null && cli.getCuenta().getAlias().equalsIgnoreCase(alias) 
 					        		&& cli.getNombre_completo().equalsIgnoreCase(contacto) ) {
