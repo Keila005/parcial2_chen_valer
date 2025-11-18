@@ -1,7 +1,5 @@
 package LogicLayer;
 
-import java.util.LinkedList;
-
 public class Contacto {
 		private String nombre; 
 	    private String alias; 

@@ -1,6 +1,5 @@
 package LogicLayer;
 
-import java.time.LocalDate;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
@@ -153,7 +152,8 @@ public class Cuenta {
 			double compro=monto/valorDolarCompra;
 			this.saldoDolar+=compro;
 
-			JOptionPane.showMessageDialog(null, "Se compro correctamente "+compro+" dolares\nSaldo actual en pesos: "+this.saldoPesos+"\nSaldo actual en dolares:"+this.saldoDolar);
+			JOptionPane.showMessageDialog(null, "Se compro correctamente "+compro+" dolares\nSaldo actual en pesos: "+this.saldoPesos+"\nSaldo actual en dolares:"+this.saldoDolar,
+					"Comprar dolares",JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/correcto.png")));
 			
 			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Dolares,monto));
 			Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Dolares,monto));

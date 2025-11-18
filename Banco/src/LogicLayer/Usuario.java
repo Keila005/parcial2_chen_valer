@@ -10,13 +10,12 @@ public abstract class Usuario {
 	private static LinkedList<Usuario> listusuarios = new LinkedList<Usuario>();
 	private String usuario;
 	private String contrasenia;
-	private boolean esAdmin;
 	
-	public Usuario(String usuario, String contrasenia, boolean esAdmin) {
+	
+	public Usuario(String usuario, String contrasenia) {
 		super();
 		this.usuario = usuario;
 		this.contrasenia = contrasenia;
-		this.esAdmin = esAdmin;
 	}
 
 	public String getUsuario() {
@@ -35,17 +34,6 @@ public abstract class Usuario {
 		this.contrasenia = contrasenia;
 	}
 	
-	public boolean isEsAdmin() {
-		if (usuario.equals("admin") && contrasenia.equals("1234")) {
-			return this.esAdmin=true;
-		}else {
-			return this.esAdmin=false;
-		}	
-	}
-
-	public void setEsAdmin(boolean esAdmin) {
-		this.esAdmin = esAdmin;
-	}
 
 	public static LinkedList<Usuario> getListusuarios() {
 		return listusuarios;
@@ -65,14 +53,14 @@ public abstract class Usuario {
 	public static Usuario Login(String usuario, String contr) {
 		
 		  for (Usuario user : listusuarios) {
-		        if (user.getUsuario().equals(usuario) && user.getContrasenia().equals(contr)) {
+		        if (user.getUsuario().equalsIgnoreCase(usuario) && user.getContrasenia().equals(contr)) {
 		            return user; // entra al menu
 		        }
 		    }
 
 		    boolean usuarioExiste = false;
 		    for (Usuario user : listusuarios) {
-		        if (user.getUsuario().equals(usuario)) { // si se ingresa el mismo nombre de usuario, 
+		        if (user.getUsuario().equalsIgnoreCase(usuario)) { // si se ingresa el mismo nombre de usuario, 
 		        	//pero la contra esta mal
 		            usuarioExiste = true;
 		            break;
@@ -126,7 +114,7 @@ public abstract class Usuario {
 		    } while (aliasExiste);
 		    	
 		    Cuenta nuevaCuenta = new Cuenta( 0, 0, alias, new Banco("Banco Virtual Keith"));
-		    Cliente nuevoCliente = new Cliente(nuevoUser, nuevaContra, false, nombre, direccion, doc, tel, mail, nuevaCuenta);
+		    Cliente nuevoCliente = new Cliente(nuevoUser, nuevaContra, nombre, direccion, doc, tel, mail, nuevaCuenta);
 		    Usuario.getListusuarios().add(nuevoCliente); //guardar en la lista de usuarios
 		    Admin.getListasClientes().add(nuevoCliente); //guardar en la lista de clientes
 		    

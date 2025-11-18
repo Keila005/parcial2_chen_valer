@@ -1,8 +1,5 @@
 package UserLayer;
 
-import java.time.LocalDate;
-import java.util.LinkedList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -19,7 +16,7 @@ public static void main(String[] args) {
 	
 	Banco mercadoPago=new Banco("Banco virtual Keith");
 	       
-	Cliente pepe = new Cliente("pepe","0000",false,
+	Cliente pepe = new Cliente("pepe","0000",
 		    "Pepe", "Av.Belgrano 1121", 12345678, 98764321,
 		    "pepe@gmail.com",
 		    new Cuenta(1000,500,"pepe.mp",mercadoPago)
@@ -28,7 +25,7 @@ public static void main(String[] args) {
 		Usuario.getListusuarios().add(pepe);
 		Admin.getListasClientes().add(pepe);
 
-		Cliente pepa = new Cliente("pepa","1111",false,
+		Cliente pepa = new Cliente("pepa","1111",
 			    "Pepa", "Av.Calchaqui 1311", 87654321, 45483644,
 			    "pepa@gmail.com",
 			    new Cuenta(10500,10,"pepapig.mp",mercadoPago)
@@ -39,7 +36,7 @@ public static void main(String[] args) {
 
 	
        
-     Admin admin = new Admin("admin", "1234", true,"IT");
+     Admin admin = new Admin("admin", "1234","IT");
      Usuario.getListusuarios().add(admin);
 	
 	JOptionPane.showMessageDialog(null, "Bienvenidos a la billetera virtual Keith","Banco Keith", JOptionPane.DEFAULT_OPTION,

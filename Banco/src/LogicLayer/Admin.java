@@ -9,9 +9,10 @@ public class Admin extends Usuario {
 	private String departamento;
 	private static LinkedList<Cliente> listasClientes = new LinkedList<Cliente>();
 	private static LinkedList<Movimiento> listasMovimientos = new LinkedList<Movimiento>();
+	
 
-	public Admin(String usuario, String contrasenia, boolean esAdmin, String departamento) {
-		super(usuario, contrasenia, esAdmin);
+public Admin(String usuario, String contrasenia, String departamento) {
+		super(usuario, contrasenia);
 		this.departamento = departamento;
 	}
 

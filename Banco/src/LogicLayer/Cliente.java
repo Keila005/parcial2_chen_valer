@@ -15,10 +15,10 @@ public class Cliente extends Usuario {
 	private static LinkedList<Contacto> cuentasGuardadas = new LinkedList<Contacto>();
 	
 
-	public Cliente(String usuario, String contrasenia, boolean esAdmin, String nombre_completo, String direccion,
+	public Cliente(String usuario, String contrasenia,String nombre_completo, String direccion,
 			int dni, int tel, String email, Cuenta cuenta) {
 		
-		super(usuario, contrasenia, esAdmin);
+		super(usuario, contrasenia);
 		this.nombre_completo = nombre_completo;
 		this.direccion = direccion;
 		this.dni = dni;
@@ -179,7 +179,7 @@ public class Cliente extends Usuario {
 								
 							case 1: // transferencia
 								
-						JOptionPane.showMessageDialog(null,"Para ingresar con transferencia debes proporcionar tus datos a la otra persona para que pueda transferirte \n"+ "ALIAS: "+this.cuenta.getAlias()+"\nCBU/CVU: "+this.cuenta.getCbu_cvu()+"\nEMAIL: "+this.email );
+						JOptionPane.showMessageDialog(null,"Para ingresar con transferencia debes proporcionar tus datos a la otra persona para que pueda transferirte \n"+ "ALIAS: "+this.cuenta.getAlias()+"\nCBU/CVU: "+this.cuenta.getCbu_cvu()+"\nEMAIL: "+this.email, "Datos Transferencia",JOptionPane.DEFAULT_OPTION, new ImageIcon(Cliente.class.getResource("/img/contacto.png")));
 								
 								break;// fin del caso 0/caso1
 										
@@ -217,7 +217,12 @@ public class Cliente extends Usuario {
 						        break; // salir del caso
 						    }else {
 						    	monto = Validaciones.IngresarDouble("Ingrese la cantidad de dinero que deseas transferir al \nAlias: "+alias +"\nNombre:"+ destinos.getNombre_completo());
-								this.cuenta.transferirDinero(monto, this.nombre_completo,destinos.getCuenta());	
+								this.cuenta.transferirDinero(monto, this.nombre_completo,destinos.getCuenta());
+								  JOptionPane.showMessageDialog(null,
+									        "Transferiste exitosamente a " + destinos.getNombre_completo() + " $" + monto+"\nSaldo actual: "+this.cuenta.getSaldoPesos(),
+									        "Éxito",
+									        JOptionPane.DEFAULT_OPTION,
+									        new ImageIcon(Cliente.class.getResource("/img/correcto.png")));
 							}
 						
 						break;
@@ -225,7 +230,7 @@ public class Cliente extends Usuario {
 					case 1: //por contactos
 						
 						if (this.cuenta.getContactos().isEmpty()) {
-							JOptionPane.showMessageDialog(null, "No hay ningun contacto disponible\nSi deseas agregar contacto ir a: Otras_Funciones->Agregar Contactos");
+							JOptionPane.showMessageDialog(null, "No hay ningun contacto disponible\nSi deseas agregar contacto ir a: Otras_Funciones->Agregar Contactos","Ningun contacto",JOptionPane.DEFAULT_OPTION, new ImageIcon(Cliente.class.getResource("/img/nohay.png")));
 						}else {
 							String[] persona = new String[this.cuenta.getContactos().size()];
 							
@@ -236,30 +241,6 @@ public class Cliente extends Usuario {
 						String destino=(String)JOptionPane.showInputDialog(null,"Seleccione a quien deseas transferir","Transferencia",0,
 								new ImageIcon(Cliente.class.getResource("/img/contacto.png")),persona,persona[0]);
 	
-//						if (destino != null) { 
-//							
-//							 Cuenta enviado=null;
-//								
-//							 for (Contacto contac : this.cuenta.getContactos()) {
-//								 if (contac.getNombre().equals(destino)) {
-//									enviado=contac.getCuenta();
-//									break;
-//								}
-//								
-//							}// fin del FOR
-//							 
-//							 if (enviado!=null) { // si se recibio una cuenta destino
-//								
-//								 monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero que necesitas transferir a "+ destino);
-//											this.getCuenta().transferirDinero(monto,this.nombre_completo,enviado);
-//								
-//								JOptionPane.showMessageDialog(null, "Transferiste exitosamente a "+destino+" $"+ monto,"Existosamente",
-//										JOptionPane.DEFAULT_OPTION, new ImageIcon(Cliente.class.getResource("/img/correcto.png")));
-//									}
-//							
-//							}// si eligio alguna persona
-//						
-						// FORMA funciona
 						Cuenta enviado = null;
 						boolean encontrado = false;
 
@@ -378,6 +359,7 @@ public class Cliente extends Usuario {
 					    
 					    if (existe) {
 					    	  int cbu = Validaciones.IngresarInt("Ingrese el CBU/CVU del contacto");
+					    	  
 					    		this.cuenta.getContactos().add(new Contacto(contacto,alias,cbu));
 
 							    JOptionPane.showMessageDialog(null, "Contacto agregado correctamente.","Agregado",JOptionPane.DEFAULT_OPTION,
@@ -400,7 +382,8 @@ public class Cliente extends Usuario {
 				case 2: //ver datos	
 					
 						JOptionPane.showMessageDialog(null, "Alias:"+this.cuenta.getAlias()+"\nCBU/CVU:"+this.cuenta.getCbu_cvu()+"\nSaldo pesos: "+this.cuenta.getSaldoPesos()+
-								"\nSaldo dolar: "+this.cuenta.getSaldoDolar()+"\nBanco: "+this.cuenta.getBanco());
+								"\nSaldo dolar: "+this.cuenta.getSaldoDolar()+"\nBanco: "+this.cuenta.getBanco(),"Datos personales",JOptionPane.DEFAULT_OPTION,
+								new ImageIcon(Cliente.class.getResource("/img/mostrar.png")));
 				
 				}
 				

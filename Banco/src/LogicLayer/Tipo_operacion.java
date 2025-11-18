@@ -1,6 +1,5 @@
 package LogicLayer;
 
-import javax.swing.JOptionPane;
 
 public enum Tipo_operacion {
 	
