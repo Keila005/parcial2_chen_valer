@@ -140,7 +140,7 @@ public class Cuenta {
 		this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar,monto));
 		Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Ingresar,monto));
 		
-			JOptionPane.showMessageDialog(null, "Se retiro el dinero correctamente por: "+lugarSeleccionado+".\nSaldo actual: "+this.saldoPesos,
+			JOptionPane.showMessageDialog(null, "Se ingresar el dinero correctamente por: "+lugarSeleccionado+".\nSaldo actual: "+this.saldoPesos,
 					"Correcto",JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/correcto.png")));
 		
 	} // fin de ingresar
@@ -170,7 +170,7 @@ public class Cuenta {
 			double vender=monto*valorDolarVender;
 			this.saldoPesos+=vender;
 			
-			JOptionPane.showMessageDialog(null, "Se vendio correctamente "+monto+" dolares\nRecibiste en Pesos"+vender+
+			JOptionPane.showMessageDialog(null, "Se vendio correctamente "+monto+" dolares\nRecibiste en Pesos: "+vender+
 					"\nSaldo actual en pesos: "+this.saldoPesos+"\nSaldo actual en dolar:"+this.saldoDolar,"Correcto",
 					JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/correcto.png")));
 			this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Dolares,monto));

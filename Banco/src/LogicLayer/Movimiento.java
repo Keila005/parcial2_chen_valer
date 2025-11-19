@@ -52,7 +52,7 @@ public class Movimiento {
 
 	@Override
 	public String toString() {
-		return "Movimiento \nNombreCliente=" + nombreCliente + ", Tipo de operacion=" + operacion + ", monto de la operacion="
+		return "Movimiento \nNombre del Cliente=" + nombreCliente + ", Tipo de operacion=" + operacion + ", monto de la operacion="
 				+ monto_operacion + ", tiempo Realizada=" + fechaRealizada + "\n--------------\n";
 	}
 

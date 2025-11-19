@@ -81,18 +81,18 @@ public abstract class Usuario {
 	
 	public static void Registrar(){
 		
-		String nuevoUser=Validaciones.IngresarString("Ingrese el nombre del usurio que deseas crear");
+		String nuevoUser=Validaciones.IngresarString("Ingrese el nombre del usuario que deseas crear");
 		
 		for (Usuario user : listusuarios) {
 			if (user.getUsuario().equalsIgnoreCase(nuevoUser)) {
-	JOptionPane.showMessageDialog(null, "El usuario ya esta registrado, debes ir al Login","Ya registrado",JOptionPane.DEFAULT_OPTION,
+	JOptionPane.showMessageDialog(null, "El usuario " +nuevoUser+" ya esta registrado, debes ir al Login","Ya registrado",JOptionPane.DEFAULT_OPTION,
 			new ImageIcon(Usuario.class.getResource("/img/nohay.png")));
 	return; //salir del metodo if
 				
 			}// fin del if, si ya existe		
 			}// fin del for
 		 String nuevaContra = Validaciones.IngresarString("Ingrese una contraseña:");
-		 String nombre=Validaciones.IngresarString("Ingrese su nombre");
+		 String nombre=Validaciones.IngresarString("Ingrese su nombre completo (nombre y apellido):");
 		 String direccion=Validaciones.IngresarString("Ingrese su direccion");
 		 int doc=Validaciones.IngresarInt("Ingrese su dni");
 		 int tel=Validaciones.IngresarInt("Ingrese su numero de telefono");
@@ -118,7 +118,7 @@ public abstract class Usuario {
 		    Usuario.getListusuarios().add(nuevoCliente); //guardar en la lista de usuarios
 		    Admin.getListasClientes().add(nuevoCliente); //guardar en la lista de clientes
 		    
-		    JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.\nYa puede iniciar sesión.","Registrado con éxito",
+		    JOptionPane.showMessageDialog(null, "Usuario : "+nuevoUser+" se registro correctamente.\nYa puede iniciar sesión.","Registrado con éxito",
 		    		JOptionPane.DEFAULT_OPTION,	new ImageIcon(Usuario.class.getResource("/img/correcto.png")));
 		  
 		    

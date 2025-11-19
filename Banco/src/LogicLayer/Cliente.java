@@ -301,7 +301,7 @@ public class Cliente extends Usuario {
 				 switch (opcionDolares) {
 				case 0: // comprar
 					
-					monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero en ARS que se quiere vender para obtener USD");
+					monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero en ARS que se quiere convertir para obtener USD");
 					this.cuenta.comprarDolares(monto, this.nombre_completo);
 					break;
 				case 1: // vender
@@ -382,7 +382,7 @@ public class Cliente extends Usuario {
 				case 2: //ver datos	
 					
 						JOptionPane.showMessageDialog(null, "Alias:"+this.cuenta.getAlias()+"\nCBU/CVU:"+this.cuenta.getCbu_cvu()+"\nSaldo pesos: "+this.cuenta.getSaldoPesos()+
-								"\nSaldo dolar: "+this.cuenta.getSaldoDolar()+"\nBanco: "+this.cuenta.getBanco(),"Datos personales",JOptionPane.DEFAULT_OPTION,
+								"\nSaldo dolar: "+this.cuenta.getSaldoDolar()+"\n"+this.cuenta.getBanco(),"Datos personales",JOptionPane.DEFAULT_OPTION,
 								new ImageIcon(Cliente.class.getResource("/img/mostrar.png")));
 				
 				}
