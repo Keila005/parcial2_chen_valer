@@ -11,7 +11,7 @@ public class Admin extends Usuario {
 	private static LinkedList<Movimiento> listasMovimientos = new LinkedList<Movimiento>();
 	
 
-public Admin(String usuario, String contrasenia, String departamento) {
+	public Admin(String usuario, String contrasenia, String departamento) {
 		super(usuario, contrasenia);
 		this.departamento = departamento;
 	}
@@ -39,6 +39,7 @@ public Admin(String usuario, String contrasenia, String departamento) {
 	public static void setListasMovimientos(LinkedList<Movimiento> listasMovimientos) {
 		Admin.listasMovimientos = listasMovimientos;
 	}
+	
 
 	@Override
 	public String toString() {
@@ -47,7 +48,7 @@ public Admin(String usuario, String contrasenia, String departamento) {
 
 	@Override
 	public void Menu() {
-		String opciones[]= {"Mostrar clientes","Eliminar cliente","Ver movimientos generales","Salir"};
+		String opciones[]= {"Mostrar clientes","Eliminar cliente","Ver movimientos generales","Ver inversiones","Salir"};
 		int opcion;
 	     do {
 	           opcion = JOptionPane.showOptionDialog(null, "Elija alguna opción",
@@ -114,10 +115,46 @@ public Admin(String usuario, String contrasenia, String departamento) {
 				
                break;
 			
-			default:
+			case 3:// ver movimientos de inversion
+				
+				if (listasClientes.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "No hay clientes registrados","Vacio",JOptionPane.DEFAULT_OPTION,
+							new ImageIcon(Admin.class.getResource("/img/nohay.png")));
+				}else {
+					String[] gente = new String[listasClientes.size()];
+					for (int i = 0; i < gente.length; i++) {
+						gente[i] = listasClientes.get(i).getNombre_completo();
+					}
+					 int seleccionado = JOptionPane.showOptionDialog(
+				                null,
+				                "Elija un cliente para ver su inversión",
+				                "Inversiones",
+				                0,
+				                JOptionPane.DEFAULT_OPTION,
+				                new ImageIcon(Admin.class.getResource("/img/ingresar.png")),
+				                gente,
+				                gente[0]);
+					 if (seleccionado >= 0) {
+				            Cliente cli = listasClientes.get(seleccionado);
+				            Cuenta c = cli.getCuenta();
+
+				            if (c.getHistorialInversion().isEmpty()) {
+				                JOptionPane.showMessageDialog(null, 
+				                        "El cliente no realizó ninguna inversión.");
+				            } else {
+				                String historial ="Historial de inversión:\n";
+				                for (String histo : c.getHistorialInversion()) {
+				                    historial += histo + "\n";
+				                }
+				                JOptionPane.showMessageDialog(null, historial);
+				                
+				            }
+				        }
+				}
+					
 				break;
-			}
-	       } while (opcion !=3 );
+			}//cierre del switch
+	       } while (opcion !=4);
 		
 	}
 }

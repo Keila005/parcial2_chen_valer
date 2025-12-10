@@ -102,7 +102,7 @@ public class Cliente extends Usuario {
 		int opcion;
 		do {
 	
-			opcion= JOptionPane.showOptionDialog(null, "Elija alguna operacion\n"+"Saldo actual en Pesos: "+this.cuenta.getSaldoPesos()+"\nSaldo actual en Dólares: "+this.cuenta.getSaldoDolar(),
+			opcion= JOptionPane.showOptionDialog(null, "Elija alguna operacion\n"+"Saldo actual en Pesos: "+this.cuenta.getSaldoPesos()+"\nSaldo actual en Dólares: "+this.cuenta.getSaldoDolar()+"\nInversión: $"+this.cuenta.getMontoInvertido(),
 	                   "Menú cliente", 0,JOptionPane.DEFAULT_OPTION, 
 	                   new ImageIcon(Cliente.class.getResource("/img/cliente.png")), nombres, nombres[0]);
 			double monto;
@@ -312,18 +312,45 @@ public class Cliente extends Usuario {
 					break;
 
 				}
-				break; // fin del caso 2
+				break; // fin del caso 
+			case 4:
+				Tipo_operacion inversion=Tipo_operacion.Invertir;
+				String [] subopciones5= inversion.getOpciones();
 				
-			case 4://otras funciones
+				 int opcionInvertir= JOptionPane.showOptionDialog(null, 
+					        "Seleccione qué deseas realizar:\nPlata invertida: $"+this.cuenta.getMontoInvertido(), 
+					        "Invertir dinero", 0,
+					        JOptionPane.DEFAULT_OPTION, 
+					        new ImageIcon(Cliente.class.getResource("/img/ingresar.png")), 
+					       subopciones5, subopciones5[0]);
+				 switch (opcionInvertir) {
+				case 0:// invertir dinero
+					monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero que se quiere invertir\n(Puede ser alcista o bajista)");	
+					this.cuenta.invertirDinero(monto, this.nombre_completo);
+					break;
+
+				case 1:// Simular dia
+					this.cuenta.simularInversion();
+					break;
+				case 2:// ver interes
+					this.cuenta.verMovimientosInversion();
+					break;
+				case 3:// retirar dinero
+					this.cuenta.retirarInversion(this.nombre_completo);
+					break;
+				}
+				break;
+				
+			case 5://otras funciones
 				Tipo_operacion otras=Tipo_operacion.Otras_Funciones;
-				String [] subopciones5= otras.getOpciones();
+				String [] subopciones6= otras.getOpciones();
 				
 				 int opcionOtras= JOptionPane.showOptionDialog(null, 
 					        "Seleccione qué deseas realizar:", 
 					        "Comprar/Verder dinero", 0,
 					        JOptionPane.DEFAULT_OPTION, 
 					        new ImageIcon(Cliente.class.getResource("/img/otro.png")), 
-					      subopciones5, subopciones5[0]);
+					      subopciones6, subopciones6[0]);
 				 switch (opcionOtras) {
 				case 0:  // agregar contactos
 					
@@ -387,11 +414,10 @@ public class Cliente extends Usuario {
 				
 				}
 				
-				break; // fin del caso 4
+				break; // fin del caso 5
 
-				// agregar caso 5 invertir dinero
 				}
-		} while (opcion!=5); // agregar la opcion seria 6
+		} while (opcion!=6); // agregar la opcion seria 6
 		
 	}
 

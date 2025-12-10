@@ -12,7 +12,10 @@ public class Cuenta {
 	private double saldoDolar;
 	private String alias;
 	private Banco banco;
-	
+	private double montoInvertido = 0;
+	private int diaInversion = 0;
+	private LinkedList<String> historialInversion = new LinkedList<>();
+
 	private LinkedList<Movimiento> listamov = new LinkedList<Movimiento>();
 	private LinkedList<Contacto> contactos = new LinkedList<Contacto>();
 	
@@ -97,6 +100,23 @@ public class Cuenta {
 	public void setContactos(LinkedList<Contacto> contactos) {
 		this.contactos = contactos;
 	}
+	
+
+	public double getMontoInvertido() {
+		return montoInvertido;
+	}
+
+	public void setMontoInvertido(double montoInvertido) {
+		this.montoInvertido = montoInvertido;
+	}
+
+	public LinkedList<String> getHistorialInversion() {
+		return historialInversion;
+	}
+
+	public void setHistorialInversion(LinkedList<String> historialInversion) {
+		this.historialInversion = historialInversion;
+	}
 
 	@Override
 	public String toString() {
@@ -140,7 +160,7 @@ public class Cuenta {
 		this.listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar,monto));
 		Admin.getListasMovimientos().add(new Movimiento(nombreCliente,Tipo_operacion.Ingresar,monto));
 		
-			JOptionPane.showMessageDialog(null, "Se ingresar el dinero correctamente por: "+lugarSeleccionado+".\nSaldo actual: "+this.saldoPesos,
+			JOptionPane.showMessageDialog(null, "Se ingresó el dinero correctamente por: "+lugarSeleccionado+".\nSaldo actual: "+this.saldoPesos,
 					"Correcto",JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/correcto.png")));
 		
 	} // fin de ingresar
@@ -180,4 +200,67 @@ public class Cuenta {
 					JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/nohay.png")));
 		}
 	} // fin de vender dolares
+
+	public void invertirDinero(double monto, String nombreCliente) {
+	    if (saldoPesos >= monto) {
+	        saldoPesos -= monto;
+	        montoInvertido += monto;
+	        
+	        JOptionPane.showMessageDialog(null, 
+	            "Invertiste $" + monto + "\nMonto de inversión total: $" + montoInvertido);
+
+	        historialInversion.add("Inversión: $" + monto);
+	        listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Invertir, monto));
+	        Admin.getListasMovimientos().add(new Movimiento(nombreCliente, Tipo_operacion.Invertir, monto));
+	 
+	    } else {
+	        JOptionPane.showMessageDialog(null, "Saldo insuficiente para invertir");
+	    }
+	}//fin de invertir
+	
+	public void retirarInversion(String nombreCliente) {
+	    saldoPesos += montoInvertido;
+	    JOptionPane.showMessageDialog(null, "Retiraste correctamente todo el dinero de la inversión($"+montoInvertido+")","Retirar inversión",JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/correcto.png")));
+	    this.historialInversion.add("Retiraste toda la inversión: $" + montoInvertido);
+	    
+        listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar, montoInvertido));
+        
+        Admin.getListasMovimientos().add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar, montoInvertido));
+        
+	    montoInvertido = 0;
+	}
+	
+	public void simularInversion() {
+	    if (this.montoInvertido <= 0) {
+	        JOptionPane.showMessageDialog(null, "No tenes dinero invertido");
+	    }else {
+	    int porcentaje =(int)(Math.random() * 12) - 6; 
+	    // (0 y 1)*12= 0 y 12 -6= -6 y 6%
+	    diaInversion++;
+	    double resultado = this.montoInvertido*porcentaje/100;
+	   
+	   this.montoInvertido += resultado;
+	    JOptionPane.showMessageDialog(null,"Tasa de interés del día: "+porcentaje+" % : "+resultado);
+	    
+	    this.historialInversion.add("Día "+diaInversion+":--------"+"\nTasa de interés: "+porcentaje+" %\nMonto de inversión total: $"+montoInvertido);
+	 
+	    }
+	}
+	
+	public void verMovimientosInversion() {
+	    if (historialInversion.isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "No hay movimientos de inversión.");
+	        return;
+	    }
+
+	    String historial = "Historial de inversión:\n";
+	    for (String mov : historialInversion) {
+	        historial += mov + "\n";
+	    }
+
+	    JOptionPane.showMessageDialog(null, historial, "Historial de Inversión", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+
+	
 }// fin de la clase

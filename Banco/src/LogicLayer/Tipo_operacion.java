@@ -7,7 +7,7 @@ public enum Tipo_operacion {
 	Ingresar(new String[]{"En efectivo","Transferencia"}),
 	Transferir(new String[]{"Alias/Cbu_cvu","Contacto"}),
 	Dolares(new String[]{"Comprar","Vender"}),
-	//agregar INVERTIR(new String[]{"Invertir","Ver interes"})
+	Invertir(new String[]{"Invertir", "Simular Día", "Ver interés", "Retirar inversión"}),
 	Otras_Funciones(new String[] {"Agregar contactos","Ver Movimientos","Ver datos"}),
 	Cerrar(new String[] {""});
 	
