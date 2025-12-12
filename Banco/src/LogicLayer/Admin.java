@@ -110,7 +110,8 @@ public class Admin extends Usuario {
 					JOptionPane.showMessageDialog(null, "No hay ningun movimiento","Vacio",JOptionPane.DEFAULT_OPTION,
 							new ImageIcon(Admin.class.getResource("/img/nohay.png")));
 				}else {
-					JOptionPane.showMessageDialog(null, this.listasMovimientos,"Movimientos generales",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, this.listasMovimientos,
+							"Movimientos generales",JOptionPane.INFORMATION_MESSAGE);
 				}
 				
                break;
@@ -146,7 +147,8 @@ public class Admin extends Usuario {
 				                for (String histo : c.getHistorialInversion()) {
 				                    historial += histo + "\n";
 				                }
-				                JOptionPane.showMessageDialog(null, historial);
+				                JOptionPane.showMessageDialog(null, historial,"Movimientos inersión",
+				                		JOptionPane.INFORMATION_MESSAGE);
 				                
 				            }
 				        }

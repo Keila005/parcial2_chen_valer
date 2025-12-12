@@ -207,32 +207,41 @@ public class Cuenta {
 	        montoInvertido += monto;
 	        
 	        JOptionPane.showMessageDialog(null, 
-	            "Invertiste $" + monto + "\nMonto de inversión total: $" + montoInvertido);
+	            "Invertiste $" + monto + "\nMonto de inversión total: $" + montoInvertido,"Inversión",
+	            JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/correcto.png")));
 
 	        historialInversion.add("Inversión: $" + monto);
 	        listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Invertir, monto));
 	        Admin.getListasMovimientos().add(new Movimiento(nombreCliente, Tipo_operacion.Invertir, monto));
 	 
 	    } else {
-	        JOptionPane.showMessageDialog(null, "Saldo insuficiente para invertir");
+	        JOptionPane.showMessageDialog(null, "Saldo insuficiente para invertir","Sin inversión",
+	        		JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/nohay.png")));
 	    }
 	}//fin de invertir
 	
 	public void retirarInversion(String nombreCliente) {
-	    saldoPesos += montoInvertido;
-	    JOptionPane.showMessageDialog(null, "Retiraste correctamente todo el dinero de la inversión($"+montoInvertido+")","Retirar inversión",JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/correcto.png")));
-	    this.historialInversion.add("Retiraste toda la inversión: $" + montoInvertido);
-	    
-        listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar, montoInvertido));
-        
-        Admin.getListasMovimientos().add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar, montoInvertido));
-        
-	    montoInvertido = 0;
+		if (montoInvertido==0) {
+			JOptionPane.showMessageDialog(null, "No tenes saldo suficiente para retirar el dinero","Insuficiente",
+					JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/nohay.png")));
+		}else {
+			  saldoPesos += montoInvertido;
+			    JOptionPane.showMessageDialog(null, "Retiraste correctamente todo el dinero de la inversión\n($"+montoInvertido+")","Retirar inversión",JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/correcto.png")));
+			    this.historialInversion.add("Retiraste toda la inversión: $" + montoInvertido);
+			    
+		        listamov.add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar, montoInvertido));
+		        
+		        Admin.getListasMovimientos().add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar, montoInvertido));
+		        
+			    montoInvertido = 0;
+		}
+	  
 	}
 	
 	public void simularInversion() {
 	    if (this.montoInvertido <= 0) {
-	        JOptionPane.showMessageDialog(null, "No tenes dinero invertido");
+	        JOptionPane.showMessageDialog(null, "No tenes dinero invertido","Sin dinero",
+	        		JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/nohay.png")));
 	    }else {
 	    int porcentaje =(int)(Math.random() * 12) - 6; 
 	    // (0 y 1)*12= 0 y 12 -6= -6 y 6%
@@ -249,7 +258,8 @@ public class Cuenta {
 	
 	public void verMovimientosInversion() {
 	    if (historialInversion.isEmpty()) {
-	        JOptionPane.showMessageDialog(null, "No hay movimientos de inversión.");
+	        JOptionPane.showMessageDialog(null, "No hay movimientos de inversión.","Vacio",
+	        		JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/nohay.png")));
 	        return;
 	    }
 
@@ -258,7 +268,8 @@ public class Cuenta {
 	        historial += mov + "\n";
 	    }
 
-	    JOptionPane.showMessageDialog(null, historial, "Historial de Inversión", JOptionPane.INFORMATION_MESSAGE);
+	    JOptionPane.showMessageDialog(null, historial, "Historial de Inversión", 
+	    		JOptionPane.INFORMATION_MESSAGE);
 	}
 
 

@@ -313,32 +313,37 @@ public class Cliente extends Usuario {
 
 				}
 				break; // fin del caso 
-			case 4:
+			case 4: // opcion de invertir
 				Tipo_operacion inversion=Tipo_operacion.Invertir;
 				String [] subopciones5= inversion.getOpciones();
-				
-				 int opcionInvertir= JOptionPane.showOptionDialog(null, 
+				int opcionInvertir=0;
+				do {
+					opcionInvertir= JOptionPane.showOptionDialog(null, 
 					        "Seleccione qué deseas realizar:\nPlata invertida: $"+this.cuenta.getMontoInvertido(), 
 					        "Invertir dinero", 0,
 					        JOptionPane.DEFAULT_OPTION, 
 					        new ImageIcon(Cliente.class.getResource("/img/ingresar.png")), 
 					       subopciones5, subopciones5[0]);
 				 switch (opcionInvertir) {
-				case 0:// invertir dinero
-					monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero que se quiere invertir\n(Puede ser alcista o bajista)");	
-					this.cuenta.invertirDinero(monto, this.nombre_completo);
-					break;
+					case 0:// invertir dinero
+						monto=Validaciones.IngresarDouble("Ingrese la cantidad de dinero que se quiere invertir\n(Puede ser alcista o bajista)");	
+						this.cuenta.invertirDinero(monto, this.nombre_completo);
+						break;
 
-				case 1:// Simular dia
-					this.cuenta.simularInversion();
-					break;
-				case 2:// ver interes
-					this.cuenta.verMovimientosInversion();
-					break;
-				case 3:// retirar dinero
-					this.cuenta.retirarInversion(this.nombre_completo);
-					break;
-				}
+					case 1:// Simular dia
+						this.cuenta.simularInversion();
+						break;
+					case 2:// ver interes
+						this.cuenta.verMovimientosInversion();
+						break;
+					case 3:// retirar dinero
+						this.cuenta.retirarInversion(this.nombre_completo);
+						break;
+					}// fin de cierre del switch
+				} while (opcionInvertir!=4);
+				
+			// fin del while salir
+				
 				break;
 				
 			case 5://otras funciones
