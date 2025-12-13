@@ -234,13 +234,14 @@ public class Cuenta {
 		        Admin.getListasMovimientos().add(new Movimiento(nombreCliente, Tipo_operacion.Ingresar, montoInvertido));
 		        
 			    montoInvertido = 0;
+			    diaInversion=0;
 		}
 	  
 	}
 	
 	public void simularInversion() {
 	    if (this.montoInvertido <= 0) {
-	        JOptionPane.showMessageDialog(null, "No tenes dinero invertido","Sin dinero",
+	        JOptionPane.showMessageDialog(null, "No tenes dinero invertido\nIngresar plata del botón: Invertir","Sin dinero",
 	        		JOptionPane.DEFAULT_OPTION,new ImageIcon(Cuenta.class.getResource("/img/nohay.png")));
 	    }else {
 	    int porcentaje =(int)(Math.random() * 12) - 6; 
@@ -249,9 +250,10 @@ public class Cuenta {
 	    double resultado = this.montoInvertido*porcentaje/100;
 	   
 	   this.montoInvertido += resultado;
-	    JOptionPane.showMessageDialog(null,"Tasa de interés del día: "+porcentaje+" % : "+resultado);
+	    JOptionPane.showMessageDialog(null,"Tasa de interés del día: "+porcentaje+" % : $"+resultado+"\nMonto total:$ "+
+	   this.montoInvertido);
 	    
-	    this.historialInversion.add("Día "+diaInversion+":--------"+"\nTasa de interés: "+porcentaje+" %\nMonto de inversión total: $"+montoInvertido);
+	    this.historialInversion.add("---------- Día "+diaInversion+":-------------"+"\nTasa de interés: "+porcentaje+" %\nMonto de inversión total: $"+montoInvertido);
 	 
 	    }
 	}
